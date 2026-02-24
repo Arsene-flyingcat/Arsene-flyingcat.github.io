@@ -23,13 +23,13 @@ export function initHeroNodes(canvas) {
     'rgba(251, 146, 60, 0.7)',   // orange
     'rgba(129, 140, 248, 0.8)',  // indigo
   ];
-  // Light mode: white nodes on soft pastel gradient
+  // Light mode: solid dark nodes on colorful gradient for contrast
   const LIGHT_NODES = [
-    'rgba(255, 255, 255, 0.95)',
-    'rgba(255, 255, 255, 0.85)',
-    'rgba(255, 255, 255, 0.9)',
-    'rgba(255, 255, 255, 0.8)',
-    'rgba(255, 255, 255, 0.9)',
+    'rgba(30, 20, 60, 0.6)',
+    'rgba(30, 20, 60, 0.5)',
+    'rgba(30, 20, 60, 0.55)',
+    'rgba(30, 20, 60, 0.5)',
+    'rgba(30, 20, 60, 0.6)',
   ];
 
   function resize() {
@@ -83,7 +83,7 @@ export function initHeroNodes(canvas) {
     ctx.clearRect(0, 0, width, height);
     const dark = isDark();
     const nodeColors = dark ? DARK_NODES : LIGHT_NODES;
-    const lineRGB = dark ? '168, 85, 247' : '255, 255, 255';
+    const lineRGB = dark ? '168, 85, 247' : '30, 20, 60';
 
     // Draw connections
     for (let i = 0; i < particles.length; i++) {
