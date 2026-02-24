@@ -214,10 +214,10 @@ function latToY(lat, height) {
 // ── IP Geolocation ──────────────────────────────────────────────
 async function fetchVisitorLocation() {
   try {
-    const res = await fetch('http://ip-api.com/json/?fields=status,lat,lon,country,city');
+    const res = await fetch('https://ipwho.is/');
     const data = await res.json();
-    if (data.status === 'success') {
-      return { lat: data.lat, lon: data.lon, country: data.country, city: data.city, ts: Date.now() };
+    if (data.success) {
+      return { lat: data.latitude, lon: data.longitude, country: data.country, city: data.city, ts: Date.now() };
     }
   } catch (e) {
     console.warn('Visitor map: could not fetch location', e);
