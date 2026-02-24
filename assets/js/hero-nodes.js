@@ -15,20 +15,21 @@ export function initHeroNodes(canvas) {
     return document.documentElement.getAttribute('data-theme') === 'dark';
   }
 
-  // Theme-aware colors
+  // Dark mode: vibrant colored nodes on dark background
   const DARK_NODES = [
-    'rgba(255, 255, 255, 0.9)',
-    'rgba(255, 255, 255, 0.7)',
-    'rgba(200, 220, 255, 0.8)',
-    'rgba(255, 210, 255, 0.8)',
-    'rgba(180, 240, 255, 0.8)',
+    'rgba(168, 85, 247, 0.9)',   // purple
+    'rgba(6, 182, 212, 0.8)',    // cyan
+    'rgba(244, 114, 182, 0.8)',  // pink
+    'rgba(251, 146, 60, 0.7)',   // orange
+    'rgba(129, 140, 248, 0.8)',  // indigo
   ];
+  // Light mode: white nodes on soft pastel gradient
   const LIGHT_NODES = [
     'rgba(255, 255, 255, 0.95)',
     'rgba(255, 255, 255, 0.85)',
+    'rgba(255, 255, 255, 0.9)',
     'rgba(255, 255, 255, 0.8)',
-    'rgba(255, 240, 255, 0.9)',
-    'rgba(240, 255, 255, 0.9)',
+    'rgba(255, 255, 255, 0.9)',
   ];
 
   function resize() {
@@ -82,7 +83,7 @@ export function initHeroNodes(canvas) {
     ctx.clearRect(0, 0, width, height);
     const dark = isDark();
     const nodeColors = dark ? DARK_NODES : LIGHT_NODES;
-    const lineColor = 'rgba(255, 255, 255,';
+    const lineRGB = dark ? '168, 85, 247' : '255, 255, 255';
 
     // Draw connections
     for (let i = 0; i < particles.length; i++) {
@@ -98,7 +99,7 @@ export function initHeroNodes(canvas) {
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
           ctx.lineTo(b.x, b.y);
-          ctx.strokeStyle = `${lineColor} ${opacity})`;
+          ctx.strokeStyle = `rgba(${lineRGB}, ${opacity})`;
           ctx.lineWidth = 0.8;
           ctx.stroke();
         }
@@ -115,7 +116,7 @@ export function initHeroNodes(canvas) {
         ctx.beginPath();
         ctx.moveTo(p.x, p.y);
         ctx.lineTo(mouse.x, mouse.y);
-        ctx.strokeStyle = `${lineColor} ${opacity})`;
+        ctx.strokeStyle = `rgba(${lineRGB}, ${opacity})`;
         ctx.lineWidth = 0.6;
         ctx.stroke();
       }

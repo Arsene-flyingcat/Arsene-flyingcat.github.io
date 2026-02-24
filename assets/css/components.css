@@ -397,10 +397,15 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: var(--hero-gradient);
+  background: linear-gradient(135deg, #9678e0, #7ecae6, #e8a5cc, #9678e0);
   background-size: 400% 400%;
   animation: gradient-shift 12s ease infinite;
   overflow: hidden;
+}
+
+[data-theme="dark"] .hero {
+  background: #0F0D1A;
+  animation: none;
 }
 
 #hero-nodes-canvas {
