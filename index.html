@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="assets/css/animations.css">
   <script>
     // Prevent FOUC: apply saved theme before paint
-    (function(){var t=localStorage.getItem('theme')||(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);})();
+    (function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();
   </script>
 </head>
 <body>

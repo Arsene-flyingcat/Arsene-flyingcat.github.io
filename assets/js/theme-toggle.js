@@ -3,12 +3,8 @@
  */
 export function initThemeToggle() {
   // Apply saved theme immediately (also handled in inline script for FOUC prevention)
-  const saved = localStorage.getItem('theme');
-  if (saved) {
-    document.documentElement.setAttribute('data-theme', saved);
-  } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    document.documentElement.setAttribute('data-theme', 'dark');
-  }
+  const saved = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
 
   // Wait for header to be injected, then bind toggle
   const observer = new MutationObserver(() => {
