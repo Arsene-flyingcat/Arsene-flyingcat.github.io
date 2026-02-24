@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" data-root=".." data-page="blog">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — arsene</title>
+  <meta name="description" content="Blog posts on projects, tools, and ideas.">
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+  <script>
+    (function(){var t=localStorage.getItem('theme')||(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);})();
+  </script>
+</head>
+<body>
+  <div id="header-slot"></div>
+
+  <div class="page-header">
+    <div class="container">
+      <h1>Blog</h1>
+      <p>Thoughts, tutorials, and updates from my latest work.</p>
+    </div>
+  </div>
+
+  <main>
+    <section class="section">
+      <div class="container" style="max-width: 800px;">
+
+        <!-- POST CARD — copy this block to add a new post -->
+        <article class="card reveal" style="margin-bottom: var(--space-xl);">
+          <div class="card-meta">
+            <span>Feb 24, 2026</span>
+            <span>3 min read</span>
+          </div>
+          <h3 class="card-title"><a href="hello-world.html">Hello World</a></h3>
+          <p class="card-excerpt">Welcome to my corner of the internet! Here's what this site is all about and what you can expect to find here.</p>
+          <div class="tags">
+            <span class="tag">meta</span>
+            <span class="tag">intro</span>
+          </div>
+        </article>
+        <!-- END POST CARD -->
+
+        <!--
+          To add a new post:
+          1. Copy blog/_template.html → blog/your-post-slug.html
+          2. Edit the new file's content
+          3. Copy the POST CARD block above and paste it here (newest first)
+          4. Update the card's date, title, excerpt, tags, and href
+        -->
+
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-slot"></div>
+  <script type="module" src="../assets/js/main.js"></script>
+</body>
+</html>

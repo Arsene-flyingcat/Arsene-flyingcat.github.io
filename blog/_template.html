@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" data-root=".." data-page="blog">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POST TITLE — arsene</title>
+  <meta name="description" content="POST DESCRIPTION">
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+  <script>
+    (function(){var t=localStorage.getItem('theme')||(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);})();
+  </script>
+</head>
+<body>
+  <div id="header-slot"></div>
+
+  <main>
+    <article class="section">
+      <div class="container" style="max-width: 800px;">
+        <a href="index.html" class="back-link">&larr; Back to Blog</a>
+
+        <div class="post-header">
+          <div class="post-meta">
+            <span>DATE</span>
+            <span>&middot;</span>
+            <span>X min read</span>
+          </div>
+          <h1>POST TITLE</h1>
+          <div class="tags" style="justify-content: center; margin-top: var(--space-md);">
+            <span class="tag">tag1</span>
+            <span class="tag">tag2</span>
+          </div>
+        </div>
+
+        <div class="prose">
+          <p>Your content goes here. Write in plain HTML using standard tags like <code>&lt;p&gt;</code>, <code>&lt;h2&gt;</code>, <code>&lt;ul&gt;</code>, <code>&lt;blockquote&gt;</code>, <code>&lt;pre&gt;&lt;code&gt;</code>, etc.</p>
+
+          <h2>Section Heading</h2>
+          <p>More content...</p>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <div id="footer-slot"></div>
+  <script type="module" src="../assets/js/main.js"></script>
+</body>
+</html>

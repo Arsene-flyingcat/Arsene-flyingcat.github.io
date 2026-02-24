@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" data-root=".." data-page="blog">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello World — arsene</title>
+  <meta name="description" content="Welcome to my corner of the internet! Here's what this site is all about.">
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+  <script>
+    (function(){var t=localStorage.getItem('theme')||(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);})();
+  </script>
+</head>
+<body>
+  <div id="header-slot"></div>
+
+  <main>
+    <article class="section">
+      <div class="container" style="max-width: 800px;">
+        <a href="index.html" class="back-link">&larr; Back to Blog</a>
+
+        <div class="post-header">
+          <div class="post-meta">
+            <span>Feb 24, 2026</span>
+            <span>&middot;</span>
+            <span>3 min read</span>
+          </div>
+          <h1>Hello World</h1>
+          <div class="tags" style="justify-content: center; margin-top: var(--space-md);">
+            <span class="tag">meta</span>
+            <span class="tag">intro</span>
+          </div>
+        </div>
+
+        <div class="prose">
+          <p>Welcome to my little corner of the internet! This is where I'll be sharing project updates, research, tutorials, and whatever else catches my attention.</p>
+
+          <h2>What to Expect</h2>
+          <p>This site is organized into a few main sections:</p>
+          <ul>
+            <li><strong>Blog</strong> — You're here! Expect posts on tools I'm building, things I'm learning, and ideas I'm exploring.</li>
+            <li><strong>Research</strong> — Academic work and research explorations, complete with abstracts and BibTeX citations.</li>
+            <li><strong>Projects</strong> — A showcase of things I've built, with links to live demos and source code.</li>
+          </ul>
+
+          <h2>How This Site Works</h2>
+          <p>This entire site is built with plain HTML, CSS, and JavaScript — no frameworks, no build tools, no dependencies. It's hosted for free on GitHub Pages.</p>
+          <p>Some fun technical details:</p>
+          <ul>
+            <li>The shared navigation and footer are loaded as HTML fragments via <code>fetch()</code> and injected with JavaScript.</li>
+            <li>Dark/light mode is persisted in <code>localStorage</code> and respects your system preference by default.</li>
+            <li>Scroll animations use the <code>IntersectionObserver</code> API — no libraries needed.</li>
+            <li>The pixel-art visitor map on the home page uses a <code>&lt;canvas&gt;</code> element and a free IP geolocation API.</li>
+          </ul>
+
+          <blockquote>
+            The best way to learn is to build, and the best way to share is to write.
+          </blockquote>
+
+          <h2>What's Next</h2>
+          <p>I'll be adding new content regularly. If you want to follow along, check back often or keep an eye on my GitHub for updates.</p>
+          <p>Thanks for stopping by!</p>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <div id="footer-slot"></div>
+  <script type="module" src="../assets/js/main.js"></script>
+</body>
+</html>

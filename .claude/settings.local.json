@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:mendo.zone)",
+      "WebFetch(domain:enveos.com)",
+      "Bash(sleep 1:*)",
+      "Bash(pkill:*)",
+      "Bash(tailscale ip -4)",
+      "Bash(ip addr show tailscale0)",
+      "Bash(curl:*)",
+      "Bash(git config:*)",
+      "Bash(ssh-keygen:*)",
+      "Bash(ssh:*)",
+      "Bash(git init:*)"
+    ]
+  }
+}

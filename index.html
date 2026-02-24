@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" data-root="." data-page="home">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>arsene — Projects, Research &amp; Blog</title>
+  <meta name="description" content="Personal website for project updates, research, and blog posts.">
+  <meta property="og:title" content="arsene — Projects, Research & Blog">
+  <meta property="og:description" content="Personal website for project updates, research, and blog posts.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <script>
+    // Prevent FOUC: apply saved theme before paint
+    (function(){var t=localStorage.getItem('theme')||(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);})();
+  </script>
+</head>
+<body>
+  <!-- Header -->
+  <div id="header-slot"></div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Hi, I'm <span style="display:inline-block">arsene</span></h1>
+      <p>I build things, write about them, and share what I learn along the way.</p>
+      <div class="hero-buttons">
+        <a href="blog/index.html" class="btn btn-primary">Read the Blog</a>
+        <a href="projects/index.html" class="btn btn-outline">View Projects</a>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <!-- Visitor Map -->
+    <section class="section map-section" id="visitor-map">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 class="gradient-text">Visitors Around the World</h2>
+          <p>Every glowing dot is someone who stopped by. Maybe you'll see yours appear!</p>
+        </div>
+        <div class="map-wrapper reveal">
+          <canvas id="visitor-map-canvas" class="map-canvas" width="800" height="400"></canvas>
+          <div class="map-stats">
+            <span id="visitor-count">Loading visitor data...</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recent Blog Posts -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2>Recent Posts</h2>
+          <p>Thoughts, tutorials, and updates from my latest work.</p>
+        </div>
+        <div class="grid-3 reveal-stagger">
+          <article class="card reveal">
+            <div class="card-meta">
+              <span>Feb 24, 2026</span>
+              <span>3 min read</span>
+            </div>
+            <h3 class="card-title"><a href="blog/hello-world.html">Hello World</a></h3>
+            <p class="card-excerpt">Welcome to my corner of the internet! Here's what this site is all about and what you can expect to find here.</p>
+            <div class="tags">
+              <span class="tag">meta</span>
+              <span class="tag">intro</span>
+            </div>
+          </article>
+
+          <!-- Placeholder card 2 -->
+          <article class="card reveal" style="opacity:0.5">
+            <div class="card-meta">
+              <span>Coming soon</span>
+            </div>
+            <h3 class="card-title">More posts on the way</h3>
+            <p class="card-excerpt">Stay tuned for upcoming articles on projects, tools, and ideas I'm exploring.</p>
+            <div class="tags">
+              <span class="tag">upcoming</span>
+            </div>
+          </article>
+
+          <!-- Placeholder card 3 -->
+          <article class="card reveal" style="opacity:0.5">
+            <div class="card-meta">
+              <span>Coming soon</span>
+            </div>
+            <h3 class="card-title">And even more</h3>
+            <p class="card-excerpt">There's always something new to write about. Check back often!</p>
+            <div class="tags">
+              <span class="tag">upcoming</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Research Highlights -->
+    <section class="section" style="background: var(--bg-alt);">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2>Research</h2>
+          <p>Academic work and research explorations.</p>
+        </div>
+        <div class="grid-2 reveal-stagger">
+          <article class="card reveal">
+            <div class="card-meta">
+              <span>2026</span>
+              <span class="badge badge-wip">Work in Progress</span>
+            </div>
+            <h3 class="card-title"><a href="research/example-research.html">An Example Research Project</a></h3>
+            <p class="card-excerpt">A demonstration entry showing how research papers and projects appear on this site.</p>
+            <div class="tags">
+              <span class="tag">example</span>
+              <span class="tag">demo</span>
+            </div>
+          </article>
+
+          <article class="card reveal" style="opacity:0.5">
+            <div class="card-meta">
+              <span>Coming soon</span>
+            </div>
+            <h3 class="card-title">Future Research</h3>
+            <p class="card-excerpt">More research entries will appear here as work progresses.</p>
+            <div class="tags">
+              <span class="tag">upcoming</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Highlights -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2>Projects</h2>
+          <p>Things I've built, tinkered with, or contributed to.</p>
+        </div>
+        <div class="grid-3 reveal-stagger">
+          <article class="card reveal">
+            <div class="card-thumbnail" style="background: linear-gradient(135deg, var(--primary), var(--secondary));"></div>
+            <h3 class="card-title">This Website</h3>
+            <p class="card-excerpt">A static personal site with a pixel-art visitor map, built with vanilla HTML/CSS/JS.</p>
+            <div class="tags" style="margin-bottom: var(--space-md);">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">JavaScript</span>
+            </div>
+            <div class="card-footer">
+              <a href="https://github.com/" class="btn btn-ghost btn-sm" target="_blank" rel="noopener">GitHub</a>
+            </div>
+          </article>
+
+          <article class="card reveal" style="opacity:0.5">
+            <div class="card-thumbnail" style="background: linear-gradient(135deg, var(--accent-pink), var(--accent-orange));"></div>
+            <h3 class="card-title">Project Two</h3>
+            <p class="card-excerpt">Coming soon — another project to showcase.</p>
+            <div class="tags">
+              <span class="tag">upcoming</span>
+            </div>
+          </article>
+
+          <article class="card reveal" style="opacity:0.5">
+            <div class="card-thumbnail" style="background: linear-gradient(135deg, var(--secondary), var(--primary-light));"></div>
+            <h3 class="card-title">Project Three</h3>
+            <p class="card-excerpt">Coming soon — one more for the road.</p>
+            <div class="tags">
+              <span class="tag">upcoming</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick About -->
+    <section class="section" style="background: var(--bg-alt);">
+      <div class="container">
+        <div class="about-grid reveal">
+          <div>
+            <div class="card-thumbnail" style="height:280px; background: linear-gradient(135deg, var(--primary), var(--accent-pink)); border-radius: var(--radius-lg);"></div>
+          </div>
+          <div>
+            <h2>About Me</h2>
+            <p style="color: var(--text-muted); margin: var(--space-md) 0 var(--space-lg);">
+              I'm a developer and researcher who loves building tools, exploring ideas, and writing about what I learn.
+              This site is my digital home — a place to share projects, research, and the occasional blog post.
+            </p>
+            <a href="about/index.html" class="btn btn-primary">Learn More</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <div id="footer-slot"></div>
+
+  <script type="module" src="assets/js/main.js"></script>
+</body>
+</html>

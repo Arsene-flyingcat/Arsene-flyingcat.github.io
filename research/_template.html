@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" data-root=".." data-page="research">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PAPER TITLE — arsene</title>
+  <meta name="description" content="PAPER DESCRIPTION">
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+  <script>
+    (function(){var t=localStorage.getItem('theme')||(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);})();
+  </script>
+</head>
+<body>
+  <div id="header-slot"></div>
+
+  <main>
+    <article class="section">
+      <div class="container" style="max-width: 800px;">
+        <a href="index.html" class="back-link">&larr; Back to Research</a>
+
+        <div class="post-header">
+          <div class="post-meta">
+            <span>YEAR</span>
+            <span>&middot;</span>
+            <span class="badge badge-wip">STATUS</span>
+          </div>
+          <h1>PAPER TITLE</h1>
+          <p style="color: var(--text-muted); margin-top: var(--space-sm);">
+            Author One, Author Two &middot; <em>Venue / Conference</em>
+          </p>
+          <div class="tags" style="justify-content: center; margin-top: var(--space-md);">
+            <span class="tag">tag1</span>
+            <span class="tag">tag2</span>
+          </div>
+        </div>
+
+        <div class="prose">
+          <h2>Abstract</h2>
+          <p>Paper abstract goes here...</p>
+
+          <h2>Key Contributions</h2>
+          <ul>
+            <li>Contribution one</li>
+            <li>Contribution two</li>
+            <li>Contribution three</li>
+          </ul>
+
+          <h2>BibTeX</h2>
+        </div>
+
+        <div class="bibtex-block">
+          <button class="btn btn-ghost btn-sm bibtex-copy" onclick="navigator.clipboard.writeText(this.parentElement.querySelector('pre').textContent)">Copy</button>
+          <pre>@article{author2026title,
+  title   = {Paper Title},
+  author  = {Author One and Author Two},
+  journal = {Journal / Conference},
+  year    = {2026}
+}</pre>
+        </div>
+
+      </div>
+    </article>
+  </main>
+
+  <div id="footer-slot"></div>
+  <script type="module" src="../assets/js/main.js"></script>
+</body>
+</html>

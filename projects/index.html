@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" data-root=".." data-page="projects">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — arsene</title>
+  <meta name="description" content="Things I've built, tinkered with, or contributed to.">
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/theme.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+  <script>
+    (function(){var t=localStorage.getItem('theme')||(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);})();
+  </script>
+</head>
+<body>
+  <div id="header-slot"></div>
+
+  <div class="page-header">
+    <div class="container">
+      <h1>Projects</h1>
+      <p>Things I've built, tinkered with, or contributed to.</p>
+    </div>
+  </div>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="grid-3 reveal-stagger">
+
+          <article class="card reveal">
+            <div class="card-thumbnail" style="background: linear-gradient(135deg, var(--primary), var(--secondary));"></div>
+            <h3 class="card-title">This Website</h3>
+            <p class="card-excerpt">A static personal site with a pixel-art visitor map, dark/light mode, and scroll animations. Built with vanilla HTML, CSS, and JavaScript — no frameworks.</p>
+            <div class="tags" style="margin-bottom: var(--space-md);">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">Canvas</span>
+            </div>
+            <div class="card-footer">
+              <a href="https://github.com/" class="btn btn-ghost btn-sm" target="_blank" rel="noopener">GitHub</a>
+              <a href="../index.html" class="btn btn-ghost btn-sm">Live Demo</a>
+            </div>
+          </article>
+
+          <!-- Add more project cards here. Copy the block above as a template. -->
+
+          <article class="card reveal" style="opacity: 0.5;">
+            <div class="card-thumbnail" style="background: linear-gradient(135deg, var(--accent-pink), var(--accent-orange));"></div>
+            <h3 class="card-title">Your Next Project</h3>
+            <p class="card-excerpt">Add your projects here by copying the card template above. Include a thumbnail, description, tech stack tags, and links.</p>
+            <div class="tags" style="margin-bottom: var(--space-md);">
+              <span class="tag">template</span>
+            </div>
+            <div class="card-footer">
+              <span class="btn btn-ghost btn-sm" style="cursor: default;">Coming Soon</span>
+            </div>
+          </article>
+
+          <article class="card reveal" style="opacity: 0.5;">
+            <div class="card-thumbnail" style="background: linear-gradient(135deg, var(--secondary), var(--primary-light));"></div>
+            <h3 class="card-title">And Another</h3>
+            <p class="card-excerpt">The grid adjusts automatically — two columns on tablets, three on desktop, single column on mobile.</p>
+            <div class="tags" style="margin-bottom: var(--space-md);">
+              <span class="tag">template</span>
+            </div>
+            <div class="card-footer">
+              <span class="btn btn-ghost btn-sm" style="cursor: default;">Coming Soon</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-slot"></div>
+  <script type="module" src="../assets/js/main.js"></script>
+</body>
+</html>
