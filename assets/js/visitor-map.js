@@ -215,16 +215,12 @@ function latToY(lat, height) {
 async function fetchVisitorLocation() {
   const apis = [
     {
-      url: 'https://ipapi.co/json/',
-      parse: (d) => d.latitude ? { lat: d.latitude, lon: d.longitude, country: d.country_name, city: d.city, ts: Date.now() } : null,
-    },
-    {
       url: 'https://ipwho.is/',
       parse: (d) => d.success ? { lat: d.latitude, lon: d.longitude, country: d.country, city: d.city, ts: Date.now() } : null,
     },
     {
-      url: 'https://freeipapi.com/api/json',
-      parse: (d) => d.latitude ? { lat: d.latitude, lon: d.longitude, country: d.countryName, city: d.cityName, ts: Date.now() } : null,
+      url: 'https://get.geojs.io/v1/ip/geo.json',
+      parse: (d) => d.latitude ? { lat: parseFloat(d.latitude), lon: parseFloat(d.longitude), country: d.country, city: d.city, ts: Date.now() } : null,
     },
   ];
 
