@@ -211,16 +211,32 @@ function latToY(lat, height) {
   return ((90 - lat) / 180) * height;
 }
 
-// ── IP Geolocation ──────────────────────────────────────────────
+// ── IP Geolocation (tries multiple free APIs as fallback) ───────
 async function fetchVisitorLocation() {
-  try {
-    const res = await fetch('https://ipwho.is/');
-    const data = await res.json();
-    if (data.success) {
-      return { lat: data.latitude, lon: data.longitude, country: data.country, city: data.city, ts: Date.now() };
+  const apis = [
+    {
+      url: 'https://ipapi.co/json/',
+      parse: (d) => d.latitude ? { lat: d.latitude, lon: d.longitude, country: d.country_name, city: d.city, ts: Date.now() } : null,
+    },
+    {
+      url: 'https://ipwho.is/',
+      parse: (d) => d.success ? { lat: d.latitude, lon: d.longitude, country: d.country, city: d.city, ts: Date.now() } : null,
+    },
+    {
+      url: 'https://freeipapi.com/api/json',
+      parse: (d) => d.latitude ? { lat: d.latitude, lon: d.longitude, country: d.countryName, city: d.cityName, ts: Date.now() } : null,
+    },
+  ];
+
+  for (const api of apis) {
+    try {
+      const res = await fetch(api.url);
+      const data = await res.json();
+      const loc = api.parse(data);
+      if (loc) return loc;
+    } catch (e) {
+      console.warn(`Visitor map: ${api.url} failed`, e);
     }
-  } catch (e) {
-    console.warn('Visitor map: could not fetch location', e);
   }
   return null;
 }
