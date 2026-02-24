@@ -11,13 +11,13 @@ export function initHeroNodes(canvas) {
   let mouse = { x: -9999, y: -9999 };
   let animId = null;
 
-  // Colors that match the brand palette
+  // Bright colors that pop on the gradient background
   const NODE_COLORS = [
-    'rgba(108, 60, 225, 0.8)',   // primary violet
-    'rgba(168, 85, 247, 0.8)',   // light purple
-    'rgba(6, 182, 212, 0.7)',    // cyan
-    'rgba(244, 114, 182, 0.7)',  // pink
-    'rgba(251, 146, 60, 0.6)',   // orange
+    'rgba(255, 255, 255, 0.9)',
+    'rgba(255, 255, 255, 0.7)',
+    'rgba(200, 220, 255, 0.8)',
+    'rgba(255, 210, 255, 0.8)',
+    'rgba(180, 240, 255, 0.8)',
   ];
 
   function resize() {
@@ -84,7 +84,7 @@ export function initHeroNodes(canvas) {
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
           ctx.lineTo(b.x, b.y);
-          ctx.strokeStyle = `rgba(168, 85, 247, ${opacity})`;
+          ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
           ctx.lineWidth = 0.8;
           ctx.stroke();
         }
@@ -101,7 +101,7 @@ export function initHeroNodes(canvas) {
         ctx.beginPath();
         ctx.moveTo(p.x, p.y);
         ctx.lineTo(mouse.x, mouse.y);
-        ctx.strokeStyle = `rgba(6, 182, 212, ${opacity})`;
+        ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
         ctx.lineWidth = 0.6;
         ctx.stroke();
       }
