@@ -213,20 +213,19 @@ small {
 
 /* ---- Page header (used on listing pages) ---- */
 .page-header {
-  background: var(--hero-gradient);
-  background-size: 400% 400%;
-  animation: gradient-shift 12s ease infinite;
-  color: var(--text-on-gradient);
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
   padding: var(--space-4xl) 0 var(--space-3xl);
   text-align: center;
 }
 
 .page-header h1 {
-  color: var(--text-on-gradient);
+  color: var(--text);
 }
 
 .page-header p {
-  color: rgba(255,255,255,0.85);
+  color: var(--text-muted);
   max-width: 600px;
   margin: var(--space-sm) auto 0;
 }
