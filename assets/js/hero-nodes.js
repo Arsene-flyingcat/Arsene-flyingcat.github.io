@@ -73,9 +73,17 @@ export function initHeroNodes(canvas) {
         p.vy += dy / dist * 0.02;
       }
 
-      // Dampen velocity
-      p.vx *= 0.999;
-      p.vy *= 0.999;
+      // Ambient drift — gentle wandering even without mouse
+      p.vx += (Math.random() - 0.5) * 0.02;
+      p.vy += (Math.random() - 0.5) * 0.02;
+
+      // Clamp speed so nodes don't fly too fast
+      const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+      const maxSpeed = 0.8;
+      if (speed > maxSpeed) {
+        p.vx = (p.vx / speed) * maxSpeed;
+        p.vy = (p.vy / speed) * maxSpeed;
+      }
     }
   }
 
