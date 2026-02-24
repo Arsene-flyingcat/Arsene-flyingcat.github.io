@@ -328,10 +328,10 @@ function updateCount(count) {
   const el = document.getElementById('visitor-count');
   if (!el) return;
   if (count === 0) {
-    el.textContent = 'Could not load visitor data. The map still looks cool though!';
+    el.textContent = '';
   } else if (count === 1) {
-    el.innerHTML = '<strong>1</strong> visitor tracked — that\'s you!';
+    el.innerHTML = '<strong>1</strong> visitor';
   } else {
-    el.innerHTML = `<strong>${count}</strong> visitors from around the world`;
+    el.innerHTML = `<strong>${count}</strong> visitors`;
   }
 }
