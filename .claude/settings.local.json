@@ -17,7 +17,11 @@
       "Bash(git push:*)",
       "Bash(git add:*)",
       "WebFetch(domain:arsene-flyingcat.github.io)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "WebFetch(domain:www.sciencedirect.com)",
+      "WebFetch(domain:ui.adsabs.harvard.edu)",
+      "WebFetch(domain:api.crossref.org)",
+      "WebFetch(domain:scholar.google.com)"
     ]
   }
 }
