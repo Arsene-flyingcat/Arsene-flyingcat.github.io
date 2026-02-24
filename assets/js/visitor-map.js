@@ -92,6 +92,9 @@ export function initVisitorMap(canvas) {
     } else {
       updateCount(0);
     }
+  }).catch((err) => {
+    console.warn('Visitor map error:', err);
+    updateCount(0);
   });
 }
 
@@ -226,7 +229,11 @@ async function fetchVisitorLocation() {
 
   for (const api of apis) {
     try {
-      const res = await fetch(api.url);
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 5000);
+      const res = await fetch(api.url, { signal: controller.signal });
+      clearTimeout(timeout);
+      if (!res.ok) continue;
       const data = await res.json();
       const loc = api.parse(data);
       if (loc) return loc;
@@ -234,6 +241,31 @@ async function fetchVisitorLocation() {
       console.warn(`Visitor map: ${api.url} failed`, e);
     }
   }
+
+  // Last resort: try JSONP-style via script tag for ip-api.com
+  try {
+    const loc = await new Promise((resolve, reject) => {
+      const cb = '_geoCallback' + Date.now();
+      const timeout = setTimeout(() => { delete window[cb]; reject('timeout'); }, 5000);
+      window[cb] = (data) => {
+        clearTimeout(timeout);
+        delete window[cb];
+        if (data.status === 'success') {
+          resolve({ lat: data.lat, lon: data.lon, country: data.country, city: data.city, ts: Date.now() });
+        } else {
+          reject('failed');
+        }
+      };
+      const s = document.createElement('script');
+      s.src = `http://ip-api.com/json/?callback=${cb}&fields=status,lat,lon,country,city`;
+      s.onerror = () => { clearTimeout(timeout); delete window[cb]; reject('script error'); };
+      document.head.appendChild(s);
+    });
+    if (loc) return loc;
+  } catch (e) {
+    console.warn('Visitor map: JSONP fallback failed', e);
+  }
+
   return null;
 }
 
