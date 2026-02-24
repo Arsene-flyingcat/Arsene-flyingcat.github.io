@@ -11,13 +11,24 @@ export function initHeroNodes(canvas) {
   let mouse = { x: -9999, y: -9999 };
   let animId = null;
 
-  // Bright colors that pop on the gradient background
-  const NODE_COLORS = [
+  function isDark() {
+    return document.documentElement.getAttribute('data-theme') === 'dark';
+  }
+
+  // Theme-aware colors
+  const DARK_NODES = [
     'rgba(255, 255, 255, 0.9)',
     'rgba(255, 255, 255, 0.7)',
     'rgba(200, 220, 255, 0.8)',
     'rgba(255, 210, 255, 0.8)',
     'rgba(180, 240, 255, 0.8)',
+  ];
+  const LIGHT_NODES = [
+    'rgba(255, 255, 255, 0.95)',
+    'rgba(255, 255, 255, 0.85)',
+    'rgba(255, 255, 255, 0.8)',
+    'rgba(255, 240, 255, 0.9)',
+    'rgba(240, 255, 255, 0.9)',
   ];
 
   function resize() {
@@ -36,7 +47,7 @@ export function initHeroNodes(canvas) {
         vx: (Math.random() - 0.5) * 0.6,
         vy: (Math.random() - 0.5) * 0.6,
         radius: Math.random() * 2 + 1.5,
-        color: NODE_COLORS[Math.floor(Math.random() * NODE_COLORS.length)],
+        colorIndex: Math.floor(Math.random() * DARK_NODES.length),
       });
     }
   }
@@ -69,6 +80,9 @@ export function initHeroNodes(canvas) {
 
   function draw() {
     ctx.clearRect(0, 0, width, height);
+    const dark = isDark();
+    const nodeColors = dark ? DARK_NODES : LIGHT_NODES;
+    const lineColor = 'rgba(255, 255, 255,';
 
     // Draw connections
     for (let i = 0; i < particles.length; i++) {
@@ -84,7 +98,7 @@ export function initHeroNodes(canvas) {
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
           ctx.lineTo(b.x, b.y);
-          ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+          ctx.strokeStyle = `${lineColor} ${opacity})`;
           ctx.lineWidth = 0.8;
           ctx.stroke();
         }
@@ -101,7 +115,7 @@ export function initHeroNodes(canvas) {
         ctx.beginPath();
         ctx.moveTo(p.x, p.y);
         ctx.lineTo(mouse.x, mouse.y);
-        ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+        ctx.strokeStyle = `${lineColor} ${opacity})`;
         ctx.lineWidth = 0.6;
         ctx.stroke();
       }
@@ -109,16 +123,17 @@ export function initHeroNodes(canvas) {
 
     // Draw nodes
     for (const p of particles) {
+      const color = nodeColors[p.colorIndex];
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-      ctx.fillStyle = p.color;
+      ctx.fillStyle = color;
       ctx.fill();
 
       // Subtle glow
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.radius * 3, 0, Math.PI * 2);
       const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 3);
-      glow.addColorStop(0, p.color.replace(/[\d.]+\)$/, '0.15)'));
+      glow.addColorStop(0, color.replace(/[\d.]+\)$/, '0.2)'));
       glow.addColorStop(1, 'transparent');
       ctx.fillStyle = glow;
       ctx.fill();
