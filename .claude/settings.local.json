@@ -12,7 +12,12 @@
       "Bash(git config:*)",
       "Bash(ssh-keygen:*)",
       "Bash(ssh:*)",
-      "Bash(git init:*)"
+      "Bash(git init:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(git add:*)",
+      "WebFetch(domain:arsene-flyingcat.github.io)",
+      "Bash(git commit:*)"
     ]
   }
 }

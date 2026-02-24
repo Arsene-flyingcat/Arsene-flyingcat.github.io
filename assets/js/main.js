@@ -17,6 +17,13 @@ async function init() {
   // Scroll reveal (runs after all content is in the DOM)
   initScrollReveal();
 
+  // Hero node network — only on the home page
+  const heroCanvas = document.getElementById('hero-nodes-canvas');
+  if (heroCanvas) {
+    const { initHeroNodes } = await import('./hero-nodes.js');
+    initHeroNodes(heroCanvas);
+  }
+
   // Visitor map — only on the home page
   const mapCanvas = document.getElementById('visitor-map-canvas');
   if (mapCanvas) {
