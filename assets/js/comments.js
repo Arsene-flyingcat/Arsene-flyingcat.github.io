@@ -1,14 +1,22 @@
 /**
- * comments.js — Anonymous comment system using Supabase.
+ * comments.js — Anonymous comment system using Firebase Firestore.
  * No login required — just a name and message.
  */
 
-const SUPABASE_URL = 'https://yzgbwpmkfwtdecouayit.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl6Z2J3cG1rZnd0ZGVjb3VheWl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA1MDIxMzksImV4cCI6MjA1NjA3ODEzOX0.placeholder';
+const FIREBASE_CONFIG = {
+  apiKey: "REPLACE",
+  authDomain: "REPLACE.firebaseapp.com",
+  projectId: "REPLACE",
+  storageBucket: "REPLACE.firebasestorage.app",
+  messagingSenderId: "REPLACE",
+  appId: "REPLACE"
+};
 
 const AVATAR_COLORS = ['#A855F7', '#06B6D4', '#F472B6', '#FB923C', '#10B981'];
 
-export function initComments() {
+let db = null;
+
+export async function initComments() {
   const list = document.getElementById('comments-list');
   const form = document.getElementById('comment-form');
   if (!list || !form) return;
@@ -20,8 +28,14 @@ export function initComments() {
   const nameInput = document.getElementById('comment-name');
   if (savedName && nameInput) nameInput.value = savedName;
 
-  // Load existing comments
-  loadComments(pagePath).then(comments => renderComments(comments, list));
+  // Load Firebase and existing comments
+  try {
+    await initFirebase();
+    const comments = await loadComments(pagePath);
+    renderComments(comments, list);
+  } catch (e) {
+    console.warn('Comments: init failed', e);
+  }
 
   // Handle form submit
   form.addEventListener('submit', async (e) => {
@@ -31,7 +45,6 @@ export function initComments() {
     const content = contentInput.value.trim();
     const honeypot = document.getElementById('comment-url');
 
-    // Honeypot check — bots fill hidden fields
     if (!name || !content || (honeypot && honeypot.value)) return;
 
     const btn = form.querySelector('button[type="submit"]');
@@ -39,9 +52,9 @@ export function initComments() {
     btn.textContent = '...';
 
     try {
-      const result = await postComment(pagePath, name, content);
-      if (result && result.length) {
-        appendComment(result[0], list);
+      const newComment = await postComment(pagePath, name, content);
+      if (newComment) {
+        appendComment(newComment, list);
         contentInput.value = '';
         localStorage.setItem('comment_name', name);
       }
@@ -53,8 +66,16 @@ export function initComments() {
     btn.textContent = getLang() === 'zh' ? '发表评论' : 'Post';
   });
 
-  // Update placeholders for current language
   updateFormLang(form);
+
+  // Re-translate when language toggles
+  document.addEventListener('langchange', () => {
+    updateFormLang(form);
+    const emptyEl = list.querySelector('.comments-empty');
+    if (emptyEl) {
+      emptyEl.textContent = getLang() === 'zh' ? '还没有评论，来做第一个吧！' : 'No comments yet. Be the first!';
+    }
+  });
 }
 
 function getLang() {
@@ -71,16 +92,27 @@ function updateFormLang(form) {
   if (btn) btn.textContent = lang === 'zh' ? '发表评论' : 'Post';
 }
 
-// ── Supabase REST API ────────────────────────────────────────────
+// ── Firebase ─────────────────────────────────────────────────────
+
+async function initFirebase() {
+  if (db) return;
+  await loadScript('https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js');
+  await loadScript('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js');
+  /* global firebase */
+  if (!firebase.apps.length) {
+    firebase.initializeApp(FIREBASE_CONFIG);
+  }
+  db = firebase.firestore();
+}
 
 async function loadComments(pagePath) {
+  if (!db) return [];
   try {
-    const url = `${SUPABASE_URL}/rest/v1/comments?page_path=eq.${encodeURIComponent(pagePath)}&order=created_at.asc`;
-    const res = await fetch(url, {
-      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
-    });
-    if (!res.ok) return [];
-    return res.json();
+    const snap = await db.collection('comments')
+      .where('page_path', '==', pagePath)
+      .orderBy('created_at', 'asc')
+      .get();
+    return snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   } catch (e) {
     console.warn('Failed to load comments:', e);
     return [];
@@ -88,21 +120,27 @@ async function loadComments(pagePath) {
 }
 
 async function postComment(pagePath, authorName, content) {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/comments`, {
-    method: 'POST',
-    headers: {
-      'apikey': SUPABASE_KEY,
-      'Authorization': `Bearer ${SUPABASE_KEY}`,
-      'Content-Type': 'application/json',
-      'Prefer': 'return=representation'
-    },
-    body: JSON.stringify({
-      page_path: pagePath,
-      author_name: authorName,
-      content: content
-    })
+  if (!db) return null;
+  const data = {
+    page_path: pagePath,
+    author_name: authorName,
+    content: content,
+    created_at: firebase.firestore.FieldValue.serverTimestamp()
+  };
+  const ref = await db.collection('comments').add(data);
+  // Return with a client-side timestamp for immediate rendering
+  return { id: ref.id, author_name: authorName, content: content, created_at: new Date().toISOString() };
+}
+
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    if (document.querySelector(`script[src="${src}"]`)) { resolve(); return; }
+    const s = document.createElement('script');
+    s.src = src;
+    s.onload = resolve;
+    s.onerror = reject;
+    document.head.appendChild(s);
   });
-  return res.json();
 }
 
 // ── Rendering ────────────────────────────────────────────────────
@@ -127,7 +165,8 @@ function appendComment(comment, container) {
   const initial = (comment.author_name || '?')[0].toUpperCase();
   const color = AVATAR_COLORS[comment.author_name.length % AVATAR_COLORS.length];
 
-  const time = new Date(comment.created_at);
+  const ts = comment.created_at;
+  const time = ts && ts.toDate ? ts.toDate() : new Date(ts);
   const timeStr = time.toLocaleDateString(undefined, {
     year: 'numeric', month: 'short', day: 'numeric'
   }) + ' ' + time.toLocaleTimeString(undefined, {

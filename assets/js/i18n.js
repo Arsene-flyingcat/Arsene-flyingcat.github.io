@@ -63,5 +63,6 @@ function bindLangToggle() {
 
     await loadTranslations(currentLang);
     applyTranslations();
+    document.dispatchEvent(new CustomEvent('langchange'));
   });
 }
