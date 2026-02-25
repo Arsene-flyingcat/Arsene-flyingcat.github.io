@@ -1,15 +1,21 @@
 /**
  * hero-nodes.js — Animated network of connected nodes for the hero section.
  * Particles drift around and connect with lines when close enough.
+ * Easter egg: gather all nodes near cursor → confetti → scatter.
  */
 export function initHeroNodes(canvas) {
   const ctx = canvas.getContext('2d');
   const CONNECT_DIST = 150;
   const MOUSE_DIST = 200;
+  const GATHER_DIST = 60;
   let width, height;
   let particles = [];
   let mouse = { x: -9999, y: -9999 };
   let animId = null;
+  let confetti = [];
+  let confettiActive = false;
+  let confettiStart = 0;
+  const CONFETTI_DURATION = 3000;
 
   function isDark() {
     return document.documentElement.getAttribute('data-theme') === 'dark';
@@ -31,6 +37,7 @@ export function initHeroNodes(canvas) {
     'rgba(30, 20, 60, 0.5)',
     'rgba(30, 20, 60, 0.6)',
   ];
+  const CONFETTI_COLORS = ['#A855F7', '#06B6D4', '#F472B6', '#FB923C', '#10B981', '#818CF8', '#FBBF24'];
 
   function resize() {
     width = canvas.width = canvas.offsetWidth;
@@ -53,7 +60,73 @@ export function initHeroNodes(canvas) {
     }
   }
 
+  // ── Confetti ──────────────────────────────────────────────────
+
+  function launchConfetti() {
+    confettiActive = true;
+    confettiStart = performance.now();
+    confetti = [];
+    const cx = mouse.x > 0 ? mouse.x : width / 2;
+    const cy = mouse.y > 0 ? mouse.y : height / 3;
+    for (let i = 0; i < 120; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = Math.random() * 6 + 2;
+      confetti.push({
+        x: cx,
+        y: cy,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 3,
+        size: Math.random() * 6 + 3,
+        color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
+        rotation: Math.random() * 360,
+        rotSpeed: (Math.random() - 0.5) * 12,
+      });
+    }
+  }
+
+  function updateConfetti() {
+    for (const c of confetti) {
+      c.x += c.vx;
+      c.y += c.vy;
+      c.vy += 0.12; // gravity
+      c.vx *= 0.99;
+      c.rotation += c.rotSpeed;
+    }
+    if (performance.now() - confettiStart > CONFETTI_DURATION) {
+      confettiActive = false;
+      confetti = [];
+      createParticles(); // scatter new nodes
+    }
+  }
+
+  function drawConfetti() {
+    const elapsed = performance.now() - confettiStart;
+    const fadeOut = elapsed > CONFETTI_DURATION - 500
+      ? 1 - (elapsed - (CONFETTI_DURATION - 500)) / 500
+      : 1;
+
+    for (const c of confetti) {
+      ctx.save();
+      ctx.translate(c.x, c.y);
+      ctx.rotate(c.rotation * Math.PI / 180);
+      ctx.globalAlpha = Math.max(0, fadeOut);
+      ctx.fillStyle = c.color;
+      ctx.fillRect(-c.size / 2, -c.size / 4, c.size, c.size / 2);
+      ctx.restore();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  // ── Physics ───────────────────────────────────────────────────
+
   function update() {
+    if (confettiActive) {
+      updateConfetti();
+      return;
+    }
+
+    let allGathered = mouse.x > 0 && particles.length > 0;
+
     for (const p of particles) {
       p.x += p.vx;
       p.y += p.vy;
@@ -73,6 +146,11 @@ export function initHeroNodes(canvas) {
         p.vy += dy / dist * 0.02;
       }
 
+      // Check if this node is near cursor
+      if (dist > GATHER_DIST) {
+        allGathered = false;
+      }
+
       // Ambient drift — gentle wandering even without mouse
       p.vx += (Math.random() - 0.5) * 0.02;
       p.vy += (Math.random() - 0.5) * 0.02;
@@ -85,10 +163,22 @@ export function initHeroNodes(canvas) {
         p.vy = (p.vy / speed) * maxSpeed;
       }
     }
+
+    if (allGathered) {
+      launchConfetti();
+    }
   }
+
+  // ── Rendering ─────────────────────────────────────────────────
 
   function draw() {
     ctx.clearRect(0, 0, width, height);
+
+    if (confettiActive) {
+      drawConfetti();
+      return;
+    }
+
     const dark = isDark();
     const nodeColors = dark ? DARK_NODES : LIGHT_NODES;
     const lineRGB = dark ? '168, 85, 247' : '30, 20, 60';
