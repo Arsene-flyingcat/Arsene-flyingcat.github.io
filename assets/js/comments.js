@@ -4,12 +4,12 @@
  */
 
 const FIREBASE_CONFIG = {
-  apiKey: "REPLACE",
-  authDomain: "REPLACE.firebaseapp.com",
-  projectId: "REPLACE",
-  storageBucket: "REPLACE.firebasestorage.app",
-  messagingSenderId: "REPLACE",
-  appId: "REPLACE"
+  apiKey: "AIzaSyB-DjO1mIz5HegiZwRvsBxfBlsVrRwteKo",
+  authDomain: "my-personal-web-413c5.firebaseapp.com",
+  projectId: "my-personal-web-413c5",
+  storageBucket: "my-personal-web-413c5.firebasestorage.app",
+  messagingSenderId: "292249724576",
+  appId: "1:292249724576:web:96bbf7c3bd7694117e0bc5"
 };
 
 const AVATAR_COLORS = ['#A855F7', '#06B6D4', '#F472B6', '#FB923C', '#10B981'];
