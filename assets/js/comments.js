@@ -52,12 +52,12 @@ export async function initComments() {
     btn.textContent = '...';
 
     try {
-      const newComment = await postComment(pagePath, name, content);
-      if (newComment) {
-        appendComment(newComment, list);
-        contentInput.value = '';
-        localStorage.setItem('comment_name', name);
-      }
+      await postComment(pagePath, name, content);
+      contentInput.value = '';
+      localStorage.setItem('comment_name', name);
+      // Reload all comments so the full list is always shown
+      const comments = await loadComments(pagePath);
+      renderComments(comments, list);
     } catch (err) {
       console.warn('Failed to post comment:', err);
     }
@@ -110,9 +110,13 @@ async function loadComments(pagePath) {
   try {
     const snap = await db.collection('comments')
       .where('page_path', '==', pagePath)
-      .orderBy('created_at', 'asc')
       .get();
-    return snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const comments = snap.docs.map(doc => {
+      const d = doc.data();
+      return { id: doc.id, ...d, _ts: d.created_at ? d.created_at.toMillis() : 0 };
+    });
+    comments.sort((a, b) => a._ts - b._ts);
+    return comments;
   } catch (e) {
     console.warn('Failed to load comments:', e);
     return [];
