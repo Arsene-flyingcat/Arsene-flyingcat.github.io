@@ -16,13 +16,6 @@ export async function initI18n() {
   await loadTranslations(currentLang);
   applyTranslations();
   bindLangToggle();
-
-  // Re-apply when header/footer are injected dynamically
-  const observer = new MutationObserver(() => {
-    applyTranslations();
-    bindLangToggle();
-  });
-  observer.observe(document.body, { childList: true, subtree: true });
 }
 
 function detectLanguage() {
