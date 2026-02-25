@@ -636,29 +636,29 @@
 /* ---- Comments section ---- */
 .comments-section {
   border-top: 1px solid var(--border);
-  padding-top: var(--space-2xl);
-  margin-top: var(--space-2xl);
+  padding-top: var(--space-lg);
+  margin-top: var(--space-lg);
 }
 
 .comments-section .container {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  padding: var(--space-xl);
+  padding: var(--space-md);
 }
 
 .comments-title {
   text-align: center;
-  margin-bottom: var(--space-xl);
-  font-size: 1.25rem;
+  margin-bottom: var(--space-md);
+  font-size: 1.1rem;
 }
 
 /* Comment form */
 .comment-form {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
-  margin-bottom: var(--space-xl);
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
 }
 
 .comment-form input[type="text"],
@@ -683,7 +683,7 @@
 }
 
 .comment-form textarea {
-  min-height: 100px;
+  min-height: 60px;
 }
 
 .comment-form button {
@@ -694,7 +694,7 @@
 .comments-list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: var(--space-sm);
 }
 
 .comments-empty {
@@ -706,8 +706,8 @@
 
 .comment-item {
   display: flex;
-  gap: var(--space-md);
-  padding: var(--space-md);
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
   background: var(--bg-alt);
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
