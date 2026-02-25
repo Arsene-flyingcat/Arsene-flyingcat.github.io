@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/css/animations.css">
   <script>
-    (function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();
+    (function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);var l=localStorage.getItem('lang');if(!l){var n=navigator.language||'';l=n.startsWith('zh')?'zh':'en';}document.documentElement.setAttribute('data-lang',l);})();
   </script>
 </head>
 <body>
@@ -22,8 +22,8 @@
   <main>
     <div class="error-page">
       <h1 class="gradient-text">404</h1>
-      <p>Oops! This page doesn't exist. It might have been moved, or maybe it never was.</p>
-      <a href="index.html" class="btn btn-primary">Go Home</a>
+      <p data-i18n="error.message">Oops! This page doesn't exist. It might have been moved, or maybe it never was.</p>
+      <a href="index.html" class="btn btn-primary" data-i18n="btn.goHome">Go Home</a>
     </div>
   </main>
 

@@ -345,7 +345,14 @@ function loadScript(src) {
 }
 
 // ── Total visitor counter (persistent via free API) ─────────────
+// Only increments once per browser session to avoid inflating counts on refresh.
 async function fetchTotalVisitors() {
+  const alreadyCounted = sessionStorage.getItem('visitor_counted');
+
+  if (alreadyCounted) {
+    return parseInt(localStorage.getItem('totalVisitorCount') || '0', 10);
+  }
+
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 5000);
@@ -357,6 +364,7 @@ async function fetchTotalVisitors() {
       const data = await res.json();
       const count = data.count || 0;
       localStorage.setItem('totalVisitorCount', String(count));
+      sessionStorage.setItem('visitor_counted', '1');
       return count;
     }
   } catch (e) {
@@ -368,5 +376,10 @@ async function fetchTotalVisitors() {
 function updateTotalCount(count) {
   const el = document.getElementById('total-visitors');
   if (!el || count <= 0) return;
-  el.innerHTML = `<strong>${count.toLocaleString()}</strong> total visits`;
+  const lang = document.documentElement.getAttribute('data-lang') || 'en';
+  if (lang === 'zh') {
+    el.innerHTML = `<strong>${count.toLocaleString()}</strong> \u6b21\u8bbf\u95ee`;
+  } else {
+    el.innerHTML = `<strong>${count.toLocaleString()}</strong> total visits`;
+  }
 }

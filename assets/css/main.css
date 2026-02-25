@@ -240,6 +240,21 @@ small {
   -webkit-text-fill-color: transparent;
 }
 
+/* ---- i18n content blocks ---- */
+[data-lang-content] { display: none; }
+html[data-lang="en"] [data-lang-content="en"] { display: block; }
+html[data-lang="zh"] [data-lang-content="zh"] { display: block; }
+html[data-lang="en"] span[data-lang-content="en"],
+html[data-lang="en"] a[data-lang-content="en"] { display: inline; }
+html[data-lang="zh"] span[data-lang-content="zh"],
+html[data-lang="zh"] a[data-lang-content="zh"] { display: inline; }
+html[data-lang="en"] div.hero-buttons[data-lang-content="en"],
+html[data-lang="en"] div.tags[data-lang-content="en"],
+html[data-lang="en"] div.social-links[data-lang-content="en"] { display: flex; }
+html[data-lang="zh"] div.hero-buttons[data-lang-content="zh"],
+html[data-lang="zh"] div.tags[data-lang-content="zh"],
+html[data-lang="zh"] div.social-links[data-lang-content="zh"] { display: flex; }
+
 /* ---- Visually hidden ---- */
 .sr-only {
   position: absolute;

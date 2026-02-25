@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="../assets/css/components.css">
   <link rel="stylesheet" href="../assets/css/animations.css">
   <script>
-    (function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();
+    (function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);var l=localStorage.getItem('lang');if(!l){var n=navigator.language||'';l=n.startsWith('zh')?'zh':'en';}document.documentElement.setAttribute('data-lang',l);})();
   </script>
 </head>
 <body>
@@ -29,8 +29,8 @@
             <span>Feb 24, 2026</span>
             <span>3 min read</span>
           </div>
-          <h3 class="card-title"><a href="who-is-this-guy.html">Who Is This Guy Anyway?</a></h3>
-          <p class="card-excerpt">A completely accurate and not-at-all exaggerated self-introduction.</p>
+          <h3 class="card-title"><a href="who-is-this-guy.html" data-i18n="blog.card1.title">Who Is This Guy Anyway?</a></h3>
+          <p class="card-excerpt" data-i18n="blog.card1.excerpt">A completely accurate and not-at-all exaggerated self-introduction.</p>
           <div class="tags">
             <span class="tag">intro</span>
             <span class="tag">fiction</span>

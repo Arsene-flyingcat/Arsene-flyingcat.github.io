@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/css/animations.css">
   <script>
-    (function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();
+    (function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);var l=localStorage.getItem('lang');if(!l){var n=navigator.language||'';l=n.startsWith('zh')?'zh':'en';}document.documentElement.setAttribute('data-lang',l);})();
   </script>
 </head>
 <body>
@@ -27,11 +27,11 @@
     <canvas id="hero-nodes-canvas"></canvas>
     <div class="hero-content">
       <h1>Shuo LI</h1>
-      <p>AI for Science &middot; Multiphysics Simulation &middot; Digital Twin</p>
-      <p style="font-size: 1rem; opacity: 0.8; margin-bottom: var(--space-lg);">Assistant Professor, The University of Tokyo</p>
+      <p data-i18n="hero.subtitle">AI for Science &middot; Multiphysics Simulation &middot; Digital Twin</p>
+      <p style="font-size: 1rem; opacity: 0.8; margin-bottom: var(--space-lg);" data-i18n="hero.position">Assistant Professor, The University of Tokyo</p>
       <div class="hero-buttons">
-        <a href="blog/index.html" class="btn btn-primary">Blog</a>
-        <a href="projects/index.html" class="btn btn-outline">Projects</a>
+        <a href="blog/index.html" class="btn btn-primary" data-i18n="hero.btn.blog">Blog</a>
+        <a href="projects/index.html" class="btn btn-outline" data-i18n="hero.btn.projects">Projects</a>
       </div>
     </div>
   </section>
@@ -40,7 +40,7 @@
     <section class="section">
       <div class="container">
         <div class="section-header reveal">
-          <h2>Recent Posts</h2>
+          <h2 data-i18n="section.recentPosts">Recent Posts</h2>
         </div>
         <div class="grid-3 reveal-stagger">
           <article class="card reveal">
@@ -48,8 +48,8 @@
               <span>Feb 24, 2026</span>
               <span>4 min read</span>
             </div>
-            <h3 class="card-title"><a href="blog/who-is-this-guy.html">Who Is This Guy Anyway?</a></h3>
-            <p class="card-excerpt">A completely accurate and not-at-all exaggerated self-introduction.</p>
+            <h3 class="card-title"><a href="blog/who-is-this-guy.html" data-i18n="blog.card1.title">Who Is This Guy Anyway?</a></h3>
+            <p class="card-excerpt" data-i18n="blog.card1.excerpt">A completely accurate and not-at-all exaggerated self-introduction.</p>
             <div class="tags">
               <span class="tag">intro</span>
               <span class="tag">fiction</span>
@@ -62,7 +62,7 @@
     <section class="section" style="background: var(--bg-alt);">
       <div class="container">
         <div class="section-header reveal">
-          <h2>Selected Publications</h2>
+          <h2 data-i18n="section.publications">Selected Publications</h2>
         </div>
         <div class="grid-2 reveal-stagger">
           <article class="card reveal">
@@ -85,7 +85,7 @@
           </article>
         </div>
         <div style="text-align: center; margin-top: var(--space-xl);">
-          <a href="research/index.html" class="btn btn-outline">All Publications</a>
+          <a href="research/index.html" class="btn btn-outline" data-i18n="btn.allPublications">All Publications</a>
         </div>
       </div>
     </section>
@@ -93,13 +93,13 @@
     <section class="section">
       <div class="container">
         <div class="section-header reveal">
-          <h2>Projects</h2>
+          <h2 data-i18n="section.projects">Projects</h2>
         </div>
         <div class="grid-2 reveal-stagger">
           <article class="card reveal">
             <div class="card-thumbnail" style="background: linear-gradient(135deg, var(--accent-pink), var(--accent-orange));"></div>
-            <h3 class="card-title">GNN Surrogate Models for Granular Flows</h3>
-            <p class="card-excerpt">Graph neural network-based surrogate models for predicting granular flow behavior in arbitrarily shaped domains.</p>
+            <h3 class="card-title" data-i18n="project.gnn.title">GNN Surrogate Models for Granular Flows</h3>
+            <p class="card-excerpt" data-i18n="project.gnn.excerpt">Graph neural network-based surrogate models for predicting granular flow behavior in arbitrarily shaped domains.</p>
             <div class="tags" style="margin-top: var(--space-md);">
               <span class="tag">GNN</span>
               <span class="tag">Surrogate Model</span>
@@ -107,8 +107,8 @@
           </article>
           <article class="card reveal">
             <div class="card-thumbnail" style="background: linear-gradient(135deg, var(--secondary), var(--primary-light));"></div>
-            <h3 class="card-title">Deep Learning for Reduced-Order Modeling</h3>
-            <p class="card-excerpt">Data-driven reduced-order models using POD and deep learning for gas-solid multiphase flow simulations.</p>
+            <h3 class="card-title" data-i18n="project.rom.title">Deep Learning for Reduced-Order Modeling</h3>
+            <p class="card-excerpt" data-i18n="project.rom.excerpt">Data-driven reduced-order models using POD and deep learning for gas-solid multiphase flow simulations.</p>
             <div class="tags" style="margin-top: var(--space-md);">
               <span class="tag">POD</span>
               <span class="tag">Deep Learning</span>
@@ -125,11 +125,14 @@
             <img src="assets/images/personal_photo.jpeg" alt="Shuo LI" class="about-photo">
           </div>
           <div>
-            <h2>About</h2>
-            <p style="color: var(--text-muted); margin: var(--space-md) 0 var(--space-lg);">
+            <h2 data-i18n="section.about">About</h2>
+            <p data-lang-content="en" style="color: var(--text-muted); margin: var(--space-md) 0 var(--space-lg);">
               I am an Assistant Professor at the University of Tokyo. My research focuses on AI for Science, multiphysics simulation, and digital twin technologies. I develop data-driven reduced-order models, graph neural network-based surrogate models, and computational frameworks for large-scale granular flow and multiphase systems.
             </p>
-            <a href="about/index.html" class="btn btn-primary">More</a>
+            <p data-lang-content="zh" style="color: var(--text-muted); margin: var(--space-md) 0 var(--space-lg);">
+              我是东京大学的助理教授。研究方向为科学智能（AI for Science）、多物理场仿真和数字孪生技术。我致力于开发数据驱动的降阶模型、基于图神经网络的代理模型以及大规模颗粒流和多相流系统的计算框架。
+            </p>
+            <a href="about/index.html" class="btn btn-primary" data-i18n="btn.more">More</a>
           </div>
         </div>
       </div>
@@ -138,7 +141,7 @@
     <section class="section map-section" id="visitor-map">
       <div class="container">
         <div class="section-header reveal">
-          <h2 class="gradient-text">Visitors</h2>
+          <h2 class="gradient-text" data-i18n="section.visitors">Visitors</h2>
         </div>
         <div class="map-wrapper reveal">
           <canvas id="visitor-map-canvas" class="map-canvas" width="800" height="400"></canvas>

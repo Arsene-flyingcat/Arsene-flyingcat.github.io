@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="../assets/css/components.css">
   <link rel="stylesheet" href="../assets/css/animations.css">
   <script>
-    (function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();
+    (function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);var l=localStorage.getItem('lang');if(!l){var n=navigator.language||'';l=n.startsWith('zh')?'zh':'en';}document.documentElement.setAttribute('data-lang',l);})();
   </script>
 </head>
 <body>
@@ -23,7 +23,7 @@
   <main>
     <article class="section">
       <div class="container" style="max-width: 800px;">
-        <a href="index.html" class="back-link">&larr; Back to Blog</a>
+        <a href="index.html" class="back-link" data-i18n="blog.backToBlog">&larr; Back to Blog</a>
 
         <div class="post-header">
           <div class="post-meta">
@@ -31,14 +31,14 @@
             <span>&middot;</span>
             <span>4 min read</span>
           </div>
-          <h1>Who Is This Guy Anyway?</h1>
+          <h1 data-i18n="blog.post1.title">Who Is This Guy Anyway?</h1>
           <div class="tags" style="justify-content: center; margin-top: var(--space-md);">
             <span class="tag">intro</span>
             <span class="tag">fiction</span>
           </div>
         </div>
 
-        <div class="prose">
+        <div class="prose" data-lang-content="en">
           <p>So you've stumbled onto this website. Maybe you clicked a link. Maybe you were lost on the internet and ended up here by accident. Either way, welcome. Let me tell you a bit about myself.</p>
 
           <h2>The Origin Story</h2>
@@ -92,8 +92,84 @@
             Life is too short for bad coffee and boring websites.
           </blockquote>
         </div>
+
+        <div class="prose" data-lang-content="zh">
+          <p>所以你误打误撞来到了这个网站。也许你点了某个链接，也许你在网上冲浪时迷了路然后意外到了这里。不管怎样，欢迎。让我简单介绍一下自己。</p>
+
+          <h2>起源故事</h2>
+          <p>我出生在一个电闪雷鸣的暴风雨之夜，戏剧性到医院的灯都闪了三下。医生说只是电网问题，我妈说这是天命。我选择相信我妈。</p>
+          <p>小时候我有两大爱好：把东西拆开，以及<em>不</em>把它们装回去。父母的闹钟、电视遥控器、邻居的自行车铃铛——没有什么是安全的。我管这叫"研究"，他们管这叫"费钱"。</p>
+
+          <h2>名字那些事</h2>
+          <p>我叫碩（Shuo），但我也叫 Arsène。没错，就像怪盗亚森·罗宾那个 Arsène。不，我没偷过什么值钱的东西。这个名字来自我在法国的日子——我很快就发现，自我介绍说"我叫 Shuo"会引发大约14种不同的发音方式，没有一个是对的。于是我挑了一个听起来既酷又神秘的法语名字。效果不错——人们不再念错我的名字了，转而开始问我是不是跟一个虚构的盗贼有亲戚关系。这算进步。</p>
+
+          <h2>我莫名其妙擅长的事</h2>
+          <ul>
+            <li>把泡面做出正餐的感觉（秘诀是加个鸡蛋，再加一点自我欺骗）</li>
+            <li>在任何公共交通工具上90秒内入睡</li>
+            <li>在凌晨两点说服自己"再看一集"是合理的决定</li>
+            <li>第一次去某个地方时总能找到最长的路线</li>
+            <li>在会议中疯狂打字以显得很忙</li>
+          </ul>
+
+          <h2>MBTI：INTP（过度思考者）</h2>
+          <p>我做了 MBTI 测试，结果是 INTP，据说叫"逻辑学家"。实际上，这意味着我会花45分钟分析洗碗是立刻洗更高效还是先"泡着"更高效（剧透：它们从来不只是泡着）。我能从第一性原理给你搭建一个烤面包机的工作模型，但我会忘记真的去烤面包。我经常在脑子里开始一段对话、结束它，然后困惑于为什么对方不知道我已经得出的结论。经典 INTP。</p>
+
+          <h2>我莫名其妙不擅长的事</h2>
+          <ul>
+            <li>记住钥匙放在哪个口袋里（答案：永远是最后一个检查的口袋）</li>
+            <li>让植物存活超过三周（目前记录是26天，一棵叫"幸存者"的罗勒）</li>
+            <li>对甜点说不</li>
+            <li>空手走出书店</li>
+          </ul>
+
+          <h2>我的一天</h2>
+          <p>典型的一天大概是这样的：</p>
+          <p><strong>7:30</strong> —— 闹钟响了。按掉。</p>
+          <p><strong>7:39</strong> —— 闹钟又响了。跟自己谈判"再睡五分钟"到底是什么意思。</p>
+          <p><strong>8:15</strong> —— 终于起床。盯着天花板思考早晨的本质。</p>
+          <p><strong>9:00</strong> —— 咖啡。一天中最重要的事件。</p>
+          <p><strong>9:05</strong> —— 打开电脑。盯着代码。代码盯着我。</p>
+          <p><strong>12:00</strong> —— 午饭。大概率跟米饭有关，因为有些文化编程根深蒂固。</p>
+          <p><strong>14:00</strong> —— 饭后困倦期。短暂考虑午睡。最终选择再来杯咖啡。</p>
+          <p><strong>17:00</strong> —— 发现自己批量生产了200行代码又批量删除了180行。净产出：20行。算是高效的一天。</p>
+          <p><strong>23:00</strong> —— "今晚要早睡。" <em>打开 YouTube。</em></p>
+          <p><strong>01:30</strong> —— "我怎么在看深海生物纪录片？"</p>
+
+          <h2>我的超能力</h2>
+          <p>如果非要选一个超能力，那就是通过瞪代码来 debug。这个能力我还没完全开发出来，但越来越接近了。有时候盯着一个 bug 三个小时后，发现问题是少了一个分号。我认为这算部分成功。</p>
+
+          <h2>这个网站为什么存在</h2>
+          <p>说实话？我想要互联网上一个属于自己的角落。没有算法决定你看什么，没有无限滚动试图偷走你的下午。只是一个我可以写东西、分享正在做的事情、也许让某人会心一笑的地方。</p>
+          <p>如果你读到了这里，你要么是真的感兴趣，要么是极度无聊。不管怎样，感谢你。留下来吧——接下来只会更奇怪。</p>
+
+          <blockquote>
+            人生苦短，不宜将就咖啡和无聊的网站。
+          </blockquote>
+        </div>
       </div>
     </article>
+
+    <section class="section comments-section">
+      <div class="container" style="max-width: 800px;">
+        <h2 class="comments-title" data-i18n="comments.title">Comments</h2>
+        <script src="https://giscus.app/client.js"
+          data-repo="Arsene-flyingcat/Arsene-flyingcat.github.io"
+          data-repo-id="R_kgDORXgHzw"
+          data-category="Announcements"
+          data-category-id="DIC_kwDORXgHz84C3Jp1"
+          data-mapping="pathname"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="preferred_color_scheme"
+          data-lang="en"
+          data-loading="lazy"
+          crossorigin="anonymous"
+          async>
+        </script>
+      </div>
+    </section>
   </main>
 
   <div id="footer-slot"></div>

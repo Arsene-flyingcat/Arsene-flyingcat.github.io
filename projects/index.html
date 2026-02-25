@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="../assets/css/components.css">
   <link rel="stylesheet" href="../assets/css/animations.css">
   <script>
-    (function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();
+    (function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);var l=localStorage.getItem('lang');if(!l){var n=navigator.language||'';l=n.startsWith('zh')?'zh':'en';}document.documentElement.setAttribute('data-lang',l);})();
   </script>
 </head>
 <body>
@@ -27,8 +27,8 @@
 
           <article class="card reveal">
             <div class="card-thumbnail" style="background: linear-gradient(135deg, var(--accent-pink), var(--accent-orange));"></div>
-            <h3 class="card-title">GNN Surrogate Models for Granular Flows</h3>
-            <p class="card-excerpt">Graph neural network-based surrogate models for predicting granular flow behavior in arbitrarily shaped domains.</p>
+            <h3 class="card-title" data-i18n="project.gnn.title">GNN Surrogate Models for Granular Flows</h3>
+            <p class="card-excerpt" data-i18n="project.gnn.excerpt">Graph neural network-based surrogate models for predicting granular flow behavior in arbitrarily shaped domains.</p>
             <div class="card-meta" style="margin-top: var(--space-sm);">
               <span>2023 &ndash; present</span>
             </div>
@@ -41,8 +41,8 @@
 
           <article class="card reveal">
             <div class="card-thumbnail" style="background: linear-gradient(135deg, var(--secondary), var(--primary-light));"></div>
-            <h3 class="card-title">Deep Learning for Reduced-Order Modeling</h3>
-            <p class="card-excerpt">Data-driven reduced-order models using POD and deep learning for gas-solid multiphase flow simulations.</p>
+            <h3 class="card-title" data-i18n="project.rom.title">Deep Learning for Reduced-Order Modeling</h3>
+            <p class="card-excerpt" data-i18n="project.rom.excerpt">Data-driven reduced-order models using POD and deep learning for gas-solid multiphase flow simulations.</p>
             <div class="card-meta" style="margin-top: var(--space-sm);">
               <span>2019 &ndash; present</span>
             </div>

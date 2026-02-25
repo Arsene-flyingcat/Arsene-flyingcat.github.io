@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="../assets/css/components.css">
   <link rel="stylesheet" href="../assets/css/animations.css">
   <script>
-    (function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();
+    (function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);var l=localStorage.getItem('lang');if(!l){var n=navigator.language||'';l=n.startsWith('zh')?'zh':'en';}document.documentElement.setAttribute('data-lang',l);})();
   </script>
 </head>
 <body>
@@ -24,7 +24,7 @@
     <section class="section">
       <div class="container" style="max-width: 900px;">
 
-        <h2 style="margin-bottom: var(--space-xl);" class="reveal">Research Grants</h2>
+        <h2 style="margin-bottom: var(--space-xl);" class="reveal" data-i18n="research.grants">Research Grants</h2>
 
         <article class="card reveal" style="margin-bottom: var(--space-lg);">
           <div class="card-meta"><span>2025 &ndash; 2028</span><span class="badge badge-wip">Active</span></div>
@@ -33,7 +33,7 @@
           <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: var(--space-sm);">Role: Principal Investigator (PI)</p>
         </article>
 
-        <h2 style="margin-bottom: var(--space-xl); margin-top: var(--space-2xl);" class="reveal">Journal Papers</h2>
+        <h2 style="margin-bottom: var(--space-xl); margin-top: var(--space-2xl);" class="reveal" data-i18n="research.journals">Journal Papers</h2>
 
         <article class="card reveal" style="margin-bottom: var(--space-lg);">
           <div class="card-meta"><span>2025</span><span class="badge badge-published">Published</span></div>
@@ -95,7 +95,7 @@
           <p style="color: var(--text-muted); font-size: 0.9rem;"><strong>S. Li</strong>, S. Kajiwara, M. Sakai &middot; <em>Powder Technology</em>, Vol. 377, 2021</p>
         </article>
 
-        <h2 style="margin-bottom: var(--space-xl);" class="reveal">Selected Conferences</h2>
+        <h2 style="margin-bottom: var(--space-xl);" class="reveal" data-i18n="research.conferences">Selected Conferences</h2>
 
         <article class="card reveal" style="margin-bottom: var(--space-lg);">
           <div class="card-meta"><span>2025</span></div>
@@ -122,7 +122,7 @@
         </article>
 
         <div style="text-align: center; margin-top: var(--space-xl);">
-          <a href="https://scholar.google.com/citations?user=WbWriNsAAAAJ" class="btn btn-outline" target="_blank" rel="noopener">Google Scholar Profile</a>
+          <a href="https://scholar.google.com/citations?user=WbWriNsAAAAJ" class="btn btn-outline" target="_blank" rel="noopener" data-i18n="btn.scholarProfile">Google Scholar Profile</a>
         </div>
 
       </div>

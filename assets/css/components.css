@@ -604,6 +604,37 @@
   right: var(--space-sm);
 }
 
+/* ---- Language toggle ---- */
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--bg-alt);
+  font-weight: 700;
+  font-size: 0.85rem;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.lang-toggle:hover {
+  background: var(--surface-hover);
+  transform: scale(1.05);
+}
+
+/* ---- Comments section ---- */
+.comments-section {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-2xl);
+  margin-top: var(--space-2xl);
+}
+
+.comments-title {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
 /* ---- 404 page ---- */
 .error-page {
   min-height: 80vh;

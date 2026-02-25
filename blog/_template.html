@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="../assets/css/components.css">
   <link rel="stylesheet" href="../assets/css/animations.css">
   <script>
-    (function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();
+    (function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);var l=localStorage.getItem('lang');if(!l){var n=navigator.language||'';l=n.startsWith('zh')?'zh':'en';}document.documentElement.setAttribute('data-lang',l);})();
   </script>
 </head>
 <body>
@@ -43,6 +43,27 @@
         </div>
       </div>
     </article>
+
+    <section class="section comments-section">
+      <div class="container" style="max-width: 800px;">
+        <h2 class="comments-title" data-i18n="comments.title">Comments</h2>
+        <script src="https://giscus.app/client.js"
+          data-repo="Arsene-flyingcat/Arsene-flyingcat.github.io"
+          data-repo-id="R_kgDORXgHzw"
+          data-category="Announcements"
+          data-category-id="DIC_kwDORXgHz84C3Jp1"
+          data-mapping="pathname"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="preferred_color_scheme"
+          data-lang="en"
+          data-loading="lazy"
+          crossorigin="anonymous"
+          async>
+        </script>
+      </div>
+    </section>
   </main>
 
   <div id="footer-slot"></div>

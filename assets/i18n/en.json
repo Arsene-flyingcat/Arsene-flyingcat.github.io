@@ -1,0 +1,50 @@
+{
+  "nav.home": "Home",
+  "nav.blog": "Blog",
+  "nav.research": "Research",
+  "nav.projects": "Projects",
+  "nav.about": "About",
+
+  "hero.subtitle": "AI for Science \u00b7 Multiphysics Simulation \u00b7 Digital Twin",
+  "hero.position": "Assistant Professor, The University of Tokyo",
+  "hero.btn.blog": "Blog",
+  "hero.btn.projects": "Projects",
+
+  "section.recentPosts": "Recent Posts",
+  "section.publications": "Selected Publications",
+  "section.projects": "Projects",
+  "section.about": "About",
+  "section.visitors": "Visitors",
+
+  "btn.allPublications": "All Publications",
+  "btn.more": "More",
+
+  "blog.card1.title": "Who Is This Guy Anyway?",
+  "blog.card1.excerpt": "A completely accurate and not-at-all exaggerated self-introduction.",
+
+  "project.gnn.title": "GNN Surrogate Models for Granular Flows",
+  "project.gnn.excerpt": "Graph neural network-based surrogate models for predicting granular flow behavior in arbitrarily shaped domains.",
+  "project.rom.title": "Deep Learning for Reduced-Order Modeling",
+  "project.rom.excerpt": "Data-driven reduced-order models using POD and deep learning for gas-solid multiphase flow simulations.",
+
+  "about.title": "About Me",
+  "about.employment": "Employment",
+  "about.education": "Education",
+  "about.awards": "Awards",
+  "about.skills": "Skills",
+  "about.languages": "Languages",
+
+  "research.grants": "Research Grants",
+  "research.journals": "Journal Papers",
+  "research.conferences": "Selected Conferences",
+  "btn.scholarProfile": "Google Scholar Profile",
+
+  "blog.backToBlog": "\u2190 Back to Blog",
+  "blog.post1.title": "Who Is This Guy Anyway?",
+  "comments.title": "Comments",
+
+  "error.message": "Oops! This page doesn't exist. It might have been moved, or maybe it never was.",
+  "btn.goHome": "Go Home",
+
+  "footer.links": "Links"
+}

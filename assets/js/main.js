@@ -5,6 +5,7 @@ import { initComponents } from './components.js';
 import { initThemeToggle } from './theme-toggle.js';
 import { initMobileNav } from './mobile-nav.js';
 import { initScrollReveal } from './scroll-reveal.js';
+import { initI18n } from './i18n.js';
 
 async function init() {
   // Theme toggle listens via MutationObserver, so start it before components
@@ -13,6 +14,9 @@ async function init() {
 
   // Load shared header & footer
   await initComponents();
+
+  // i18n (after components so header/footer are in DOM)
+  await initI18n();
 
   // Scroll reveal (runs after all content is in the DOM)
   initScrollReveal();

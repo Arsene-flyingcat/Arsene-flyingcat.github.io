@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="../assets/css/components.css">
   <link rel="stylesheet" href="../assets/css/animations.css">
   <script>
-    (function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();
+    (function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);var l=localStorage.getItem('lang');if(!l){var n=navigator.language||'';l=n.startsWith('zh')?'zh':'en';}document.documentElement.setAttribute('data-lang',l);})();
   </script>
 </head>
 <body>
@@ -22,7 +22,7 @@
 
   <div class="page-header">
     <div class="container">
-      <h1>About Me</h1>
+      <h1 data-i18n="about.title">About Me</h1>
     </div>
   </div>
 
@@ -48,36 +48,74 @@
             </div>
           </div>
           <div class="prose">
-            <h2>Shuo LI (李碩) / Arsène</h2>
-            <p>I am an Assistant Professor at the University of Tokyo. My research focuses on <strong>AI for Science</strong>, <strong>multiphysics simulation</strong>, and <strong>digital twin</strong> technologies.</p>
-            <p>I develop data-driven reduced-order models, graph neural network-based surrogate models, and computational frameworks for large-scale granular flow and multiphase systems. My work bridges machine learning and computational engineering to accelerate industrial simulations.</p>
-            <p>Arsène is my French name, from my years at IFCEN (Sun Yat-sen University, Zhuhai, China) and doing research in France at INP-Grenoble and CEA-Cadarache.</p>
+            <div data-lang-content="en">
+              <h2>Shuo LI (李碩) / Arsène</h2>
+              <p>I am an Assistant Professor at the University of Tokyo. My research focuses on <strong>AI for Science</strong>, <strong>multiphysics simulation</strong>, and <strong>digital twin</strong> technologies.</p>
+              <p>I develop data-driven reduced-order models, graph neural network-based surrogate models, and computational frameworks for large-scale granular flow and multiphase systems. My work bridges machine learning and computational engineering to accelerate industrial simulations.</p>
+              <p>Arsène is my French name, from my years at IFCEN (Sun Yat-sen University, Zhuhai, China) and doing research in France at INP-Grenoble and CEA-Cadarache.</p>
+            </div>
+            <div data-lang-content="zh">
+              <h2>李碩 (Shuo LI) / Arsène</h2>
+              <p>我是东京大学工学部的助理教授。研究方向为<strong>科学智能（AI for Science）</strong>、<strong>多物理场仿真</strong>和<strong>数字孪生</strong>技术。</p>
+              <p>我致力于开发数据驱动的降阶模型、基于图神经网络的代理模型以及大规模颗粒流和多相流系统的计算框架。我的工作将机器学习与计算工程相结合，以加速工业仿真。</p>
+              <p>Arsène 是我的法语名字，源自在中法核工程与技术学院（IFCEN，中山大学珠海校区）学习以及在法国格勒诺布尔国立理工学院（INP-Grenoble）和法国原子能委员会卡达拉什研究中心（CEA-Cadarache）从事研究的经历。</p>
+            </div>
 
-            <h2>Employment</h2>
-            <ul>
-              <li><strong>Assistant Professor</strong>, School of Engineering, The University of Tokyo (2025 &ndash; present)</li>
-              <li><strong>Project Assistant Professor</strong>, School of Engineering, The University of Tokyo (2023 &ndash; 2025)</li>
-              <li><strong>Postdoctoral Researcher</strong>, Resilience Engineering Research Center, The University of Tokyo (2022 &ndash; 2023)</li>
-              <li><strong>Research Intern</strong>, CEA-Cadarache, France (2018 &ndash; 2019)</li>
-            </ul>
+            <h2 data-i18n="about.employment">Employment</h2>
+            <div data-lang-content="en">
+              <ul>
+                <li><strong>Assistant Professor</strong>, School of Engineering, The University of Tokyo (2025 &ndash; present)</li>
+                <li><strong>Project Assistant Professor</strong>, School of Engineering, The University of Tokyo (2023 &ndash; 2025)</li>
+                <li><strong>Postdoctoral Researcher</strong>, Resilience Engineering Research Center, The University of Tokyo (2022 &ndash; 2023)</li>
+                <li><strong>Research Intern</strong>, CEA-Cadarache, France (2018 &ndash; 2019)</li>
+              </ul>
+            </div>
+            <div data-lang-content="zh">
+              <ul>
+                <li><strong>助理教授</strong>，工学部，东京大学（2025 &ndash; 至今）</li>
+                <li><strong>特任助教</strong>，工学部，东京大学（2023 &ndash; 2025）</li>
+                <li><strong>博士后研究员</strong>，弹性工程研究中心，东京大学（2022 &ndash; 2023）</li>
+                <li><strong>研究实习生</strong>，CEA-Cadarache，法国（2018 &ndash; 2019）</li>
+              </ul>
+            </div>
 
-            <h2>Education</h2>
-            <ul>
-              <li><strong>Ph.D.</strong>, The University of Tokyo (2019 &ndash; 2022)<br><span style="color: var(--text-muted);">Data-driven approaches in computational granular dynamics</span></li>
-              <li><strong>M.S.</strong>, Sun Yat-sen University / IFCEN (2017 &ndash; 2019)</li>
-              <li><strong>Exchange</strong>, Institut National Polytechnique de Grenoble (INP-G), France (2018)</li>
-              <li><strong>B.Sc.</strong>, Sun Yat-sen University / IFCEN (2013 &ndash; 2017)</li>
-            </ul>
+            <h2 data-i18n="about.education">Education</h2>
+            <div data-lang-content="en">
+              <ul>
+                <li><strong>Ph.D.</strong>, The University of Tokyo (2019 &ndash; 2022)<br><span style="color: var(--text-muted);">Data-driven approaches in computational granular dynamics</span></li>
+                <li><strong>M.S.</strong>, Sun Yat-sen University / IFCEN (2017 &ndash; 2019)</li>
+                <li><strong>Exchange</strong>, Institut National Polytechnique de Grenoble (INP-G), France (2018)</li>
+                <li><strong>B.Sc.</strong>, Sun Yat-sen University / IFCEN (2013 &ndash; 2017)</li>
+              </ul>
+            </div>
+            <div data-lang-content="zh">
+              <ul>
+                <li><strong>博士</strong>，东京大学（2019 &ndash; 2022）<br><span style="color: var(--text-muted);">颗粒动力学计算中的数据驱动方法</span></li>
+                <li><strong>硕士</strong>，中山大学 / IFCEN（2017 &ndash; 2019）</li>
+                <li><strong>交换生</strong>，格勒诺布尔国立理工学院（INP-G），法国（2018）</li>
+                <li><strong>学士</strong>，中山大学 / IFCEN（2013 &ndash; 2017）</li>
+              </ul>
+            </div>
 
-            <h2>Awards</h2>
-            <ul>
-              <li><strong>Emerging Research Award</strong>, The Japanese Society for Multiphase Flow (2025)</li>
-              <li><strong>Ashizawa Award for Future Innovation</strong>, The Society of Powder Technology, Japan (2025)</li>
-              <li><strong>Dean's Award</strong>, The University of Tokyo (2023)</li>
-              <li><strong>Outstanding Graduate Award</strong>, Sun Yat-sen University (2017)</li>
-            </ul>
+            <h2 data-i18n="about.awards">Awards</h2>
+            <div data-lang-content="en">
+              <ul>
+                <li><strong>Emerging Research Award</strong>, The Japanese Society for Multiphase Flow (2025)</li>
+                <li><strong>Ashizawa Award for Future Innovation</strong>, The Society of Powder Technology, Japan (2025)</li>
+                <li><strong>Dean's Award</strong>, The University of Tokyo (2023)</li>
+                <li><strong>Outstanding Graduate Award</strong>, Sun Yat-sen University (2017)</li>
+              </ul>
+            </div>
+            <div data-lang-content="zh">
+              <ul>
+                <li><strong>新兴研究奖</strong>，日本多相流学会（2025）</li>
+                <li><strong>芦泽未来创新奖</strong>，日本粉体技术学会（2025）</li>
+                <li><strong>院长奖</strong>，东京大学（2023）</li>
+                <li><strong>优秀毕业生</strong>，中山大学（2017）</li>
+              </ul>
+            </div>
 
-            <h2>Skills</h2>
+            <h2 data-i18n="about.skills">Skills</h2>
             <div class="tags" style="gap: var(--space-sm);">
               <span class="tag">Python</span>
               <span class="tag">C/C++</span>
@@ -89,13 +127,23 @@
               <span class="tag">ParaView</span>
             </div>
 
-            <h2 style="margin-top: 2em;">Languages</h2>
-            <ul>
-              <li><strong>Mandarin</strong> (native)</li>
-              <li><strong>English</strong> (fluent)</li>
-              <li><strong>French</strong> (fluent, DELF B2)</li>
-              <li><strong>Japanese</strong> (intermediate, JLPT N2)</li>
-            </ul>
+            <h2 style="margin-top: 2em;" data-i18n="about.languages">Languages</h2>
+            <div data-lang-content="en">
+              <ul>
+                <li><strong>Mandarin</strong> (native)</li>
+                <li><strong>English</strong> (fluent)</li>
+                <li><strong>French</strong> (fluent, DELF B2)</li>
+                <li><strong>Japanese</strong> (intermediate, JLPT N2)</li>
+              </ul>
+            </div>
+            <div data-lang-content="zh">
+              <ul>
+                <li><strong>中文</strong>（母语）</li>
+                <li><strong>英语</strong>（流利）</li>
+                <li><strong>法语</strong>（流利，DELF B2）</li>
+                <li><strong>日语</strong>（中级，JLPT N2）</li>
+              </ul>
+            </div>
 
           </div>
         </div>
