@@ -51,7 +51,7 @@ function updateIcons() {
 function syncGiscusTheme(theme) {
   const iframe = document.querySelector('iframe.giscus-frame');
   if (!iframe) return;
-  const giscusTheme = theme === 'dark' ? 'dark' : 'light';
+  const giscusTheme = theme === 'dark' ? 'transparent_dark' : 'light';
   iframe.contentWindow.postMessage(
     { giscus: { setConfig: { theme: giscusTheme } } },
     'https://giscus.app'
