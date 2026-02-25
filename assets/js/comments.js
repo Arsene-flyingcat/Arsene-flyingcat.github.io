@@ -3,7 +3,7 @@
  * Uses a Cloudflare Worker proxy to Firestore (bypasses China GFW).
  */
 
-const COMMENTS_API = 'https://blog-comments-proxy.arsene-lishuo.workers.dev/api/comments';
+const COMMENTS_API = 'https://comments.arsenelee.com/api/comments';
 
 const AVATAR_COLORS = ['#A855F7', '#06B6D4', '#F472B6', '#FB923C', '#10B981'];
 
