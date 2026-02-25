@@ -6,8 +6,11 @@
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    const origin = request.headers.get('Origin') || '';
+    const allowed = (env.ALLOWED_ORIGIN || '').split(',').map(s => s.trim());
+    const corsOrigin = allowed.includes(origin) ? origin : allowed[0];
     const corsHeaders = {
-      'Access-Control-Allow-Origin': env.ALLOWED_ORIGIN,
+      'Access-Control-Allow-Origin': corsOrigin,
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
     };
