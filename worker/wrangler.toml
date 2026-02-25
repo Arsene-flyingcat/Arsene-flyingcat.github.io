@@ -1,0 +1,8 @@
+name = "blog-comments-proxy"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+FIREBASE_PROJECT_ID = "my-personal-web-413c5"
+FIREBASE_API_KEY = "AIzaSyB-DjO1mIz5HegiZwRvsBxfBlsVrRwteKo"
+ALLOWED_ORIGIN = "https://arsene-flyingcat.github.io"

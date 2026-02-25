@@ -1,20 +1,12 @@
 /**
- * comments.js — Anonymous comment system with replies, using Firebase Firestore.
- * No login required — just a name and message.
+ * comments.js — Anonymous comment system with replies.
+ * Uses a Cloudflare Worker proxy to Firestore (bypasses China GFW).
  */
 
-const FIREBASE_CONFIG = {
-  apiKey: "AIzaSyB-DjO1mIz5HegiZwRvsBxfBlsVrRwteKo",
-  authDomain: "my-personal-web-413c5.firebaseapp.com",
-  projectId: "my-personal-web-413c5",
-  storageBucket: "my-personal-web-413c5.firebasestorage.app",
-  messagingSenderId: "292249724576",
-  appId: "1:292249724576:web:96bbf7c3bd7694117e0bc5"
-};
+const COMMENTS_API = 'https://blog-comments-proxy.arsene-lishuo.workers.dev/api/comments';
 
 const AVATAR_COLORS = ['#A855F7', '#06B6D4', '#F472B6', '#FB923C', '#10B981'];
 
-let db = null;
 let _pagePath = '';
 let _listEl = null;
 
@@ -27,9 +19,8 @@ export async function initComments() {
 
   const nameInput = document.getElementById('comment-name');
 
-  // Load Firebase and existing comments
+  // Load existing comments
   try {
-    await initFirebase();
     await reloadComments();
   } catch (e) {
     console.warn('Comments: init failed', e);
@@ -91,31 +82,13 @@ function updateFormLang(form) {
   if (btn) btn.textContent = lang === 'zh' ? '发表评论' : 'Post';
 }
 
-// ── Firebase ─────────────────────────────────────────────────────
-
-async function initFirebase() {
-  if (db) return;
-  await loadScript('https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js');
-  await loadScript('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js');
-  /* global firebase */
-  if (!firebase.apps.length) {
-    firebase.initializeApp(FIREBASE_CONFIG);
-  }
-  db = firebase.firestore();
-}
+// ── API ──────────────────────────────────────────────────────────
 
 async function loadComments(pagePath) {
-  if (!db) return [];
   try {
-    const snap = await db.collection('comments')
-      .where('page_path', '==', pagePath)
-      .get();
-    const comments = snap.docs.map(doc => {
-      const d = doc.data();
-      return { id: doc.id, ...d, _ts: d.created_at ? d.created_at.toMillis() : 0 };
-    });
-    comments.sort((a, b) => a._ts - b._ts);
-    return comments;
+    const resp = await fetch(COMMENTS_API + '?page_path=' + encodeURIComponent(pagePath));
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    return await resp.json();
   } catch (e) {
     console.warn('Failed to load comments:', e);
     return [];
@@ -123,31 +96,22 @@ async function loadComments(pagePath) {
 }
 
 async function postComment(pagePath, authorName, content, parentId) {
-  if (!db) return null;
-  const data = {
-    page_path: pagePath,
-    author_name: authorName,
-    content: content,
-    created_at: firebase.firestore.FieldValue.serverTimestamp()
-  };
-  if (parentId) data.parent_id = parentId;
-  await db.collection('comments').add(data);
+  const body = { page_path: pagePath, author_name: authorName, content };
+  if (parentId) body.parent_id = parentId;
+  const resp = await fetch(COMMENTS_API, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  if (!resp.ok) {
+    const err = await resp.json().catch(() => ({}));
+    throw new Error(err.error || 'HTTP ' + resp.status);
+  }
 }
 
 async function reloadComments() {
   const comments = await loadComments(_pagePath);
   renderComments(comments, _listEl);
-}
-
-function loadScript(src) {
-  return new Promise((resolve, reject) => {
-    if (document.querySelector(`script[src="${src}"]`)) { resolve(); return; }
-    const s = document.createElement('script');
-    s.src = src;
-    s.onload = resolve;
-    s.onerror = reject;
-    document.head.appendChild(s);
-  });
 }
 
 // ── Rendering ────────────────────────────────────────────────────
@@ -192,8 +156,7 @@ function buildCommentEl(comment, isReply) {
   const initial = (comment.author_name || '?')[0].toUpperCase();
   const color = AVATAR_COLORS[comment.author_name.length % AVATAR_COLORS.length];
 
-  const ts = comment.created_at;
-  const time = ts && ts.toDate ? ts.toDate() : new Date(ts);
+  const time = new Date(comment.created_at);
   const timeStr = time.toLocaleDateString(undefined, {
     year: 'numeric', month: 'short', day: 'numeric'
   }) + ' ' + time.toLocaleTimeString(undefined, {
