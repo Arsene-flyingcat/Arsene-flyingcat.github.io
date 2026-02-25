@@ -129,6 +129,16 @@
 }
 
 @media (max-width: 767px) {
+  .nav {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: #FAFAFA;
+  }
+
+  [data-theme="dark"] .nav {
+    background: #0F0D1A;
+  }
+
   .mobile-toggle {
     display: flex;
   }
@@ -144,7 +154,6 @@
     padding-top: var(--space-2xl);
     gap: var(--space-xl);
     background: var(--bg);
-    box-shadow: -4px 0 24px rgba(0,0,0,0.15);
     transform: translateX(100%);
     transition: transform var(--transition-base);
   }
