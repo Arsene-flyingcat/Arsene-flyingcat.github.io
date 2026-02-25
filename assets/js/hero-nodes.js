@@ -15,7 +15,9 @@ export function initHeroNodes(canvas) {
   let confetti = [];
   let confettiActive = false;
   let confettiStart = 0;
-  const CONFETTI_DURATION = 3000;
+  const CONFETTI_DURATION = 5000;
+  let secondaryBursts = [];
+  let burstsSpawned = false;
 
   function isDark() {
     return document.documentElement.getAttribute('data-theme') === 'dark';
@@ -62,10 +64,32 @@ export function initHeroNodes(canvas) {
 
   // ── Confetti ──────────────────────────────────────────────────
 
+  function spawnBurst(cx, cy, count) {
+    const pieces = [];
+    for (let i = 0; i < count; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = Math.random() * 4 + 1.5;
+      pieces.push({
+        x: cx,
+        y: cy,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 2,
+        size: Math.random() * 4 + 2,
+        color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
+        rotation: Math.random() * 360,
+        rotSpeed: (Math.random() - 0.5) * 15,
+        life: 1,
+      });
+    }
+    return pieces;
+  }
+
   function launchConfetti() {
     confettiActive = true;
+    burstsSpawned = false;
     confettiStart = performance.now();
     confetti = [];
+    secondaryBursts = [];
     const cx = mouse.x > 0 ? mouse.x : width / 2;
     const cy = mouse.y > 0 ? mouse.y : height / 3;
     for (let i = 0; i < 120; i++) {
@@ -85,6 +109,8 @@ export function initHeroNodes(canvas) {
   }
 
   function updateConfetti() {
+    const elapsed = performance.now() - confettiStart;
+
     for (const c of confetti) {
       c.x += c.vx;
       c.y += c.vy;
@@ -92,19 +118,44 @@ export function initHeroNodes(canvas) {
       c.vx *= 0.99;
       c.rotation += c.rotSpeed;
     }
-    if (performance.now() - confettiStart > CONFETTI_DURATION) {
+
+    // Secondary bursts at ~1.5s from random confetti pieces
+    if (!burstsSpawned && elapsed > 1500) {
+      burstsSpawned = true;
+      const candidates = confetti.filter(c => c.x > 0 && c.x < width && c.y > 0 && c.y < height);
+      const count = Math.min(8, candidates.length);
+      for (let i = 0; i < count; i++) {
+        const pick = candidates[Math.floor(Math.random() * candidates.length)];
+        secondaryBursts.push(...spawnBurst(pick.x, pick.y, 20));
+      }
+    }
+
+    // Update secondary burst pieces
+    for (const b of secondaryBursts) {
+      b.x += b.vx;
+      b.y += b.vy;
+      b.vy += 0.08;
+      b.vx *= 0.98;
+      b.rotation += b.rotSpeed;
+      b.life -= 0.008;
+    }
+    secondaryBursts = secondaryBursts.filter(b => b.life > 0);
+
+    if (elapsed > CONFETTI_DURATION) {
       confettiActive = false;
       confetti = [];
-      createParticles(); // scatter new nodes
+      secondaryBursts = [];
+      createParticles();
     }
   }
 
   function drawConfetti() {
     const elapsed = performance.now() - confettiStart;
-    const fadeOut = elapsed > CONFETTI_DURATION - 500
-      ? 1 - (elapsed - (CONFETTI_DURATION - 500)) / 500
+    const fadeOut = elapsed > CONFETTI_DURATION - 800
+      ? 1 - (elapsed - (CONFETTI_DURATION - 800)) / 800
       : 1;
 
+    // Main confetti
     for (const c of confetti) {
       ctx.save();
       ctx.translate(c.x, c.y);
@@ -114,6 +165,18 @@ export function initHeroNodes(canvas) {
       ctx.fillRect(-c.size / 2, -c.size / 4, c.size, c.size / 2);
       ctx.restore();
     }
+
+    // Secondary bursts
+    for (const b of secondaryBursts) {
+      ctx.save();
+      ctx.translate(b.x, b.y);
+      ctx.rotate(b.rotation * Math.PI / 180);
+      ctx.globalAlpha = Math.max(0, b.life * fadeOut);
+      ctx.fillStyle = b.color;
+      ctx.fillRect(-b.size / 2, -b.size / 4, b.size, b.size / 2);
+      ctx.restore();
+    }
+
     ctx.globalAlpha = 1;
   }
 
