@@ -113,13 +113,9 @@ export function initVisitorMap(canvas) {
       }
       drawMap(ctx, canvas);
       animateDots(ctx, canvas);
-      updateCount(visitors.length);
-    } else {
-      updateCount(0);
     }
   }).catch((err) => {
     console.warn('Visitor map error:', err);
-    updateCount(0);
   });
 }
 
@@ -346,19 +342,6 @@ function loadScript(src) {
     s.onerror = reject;
     document.head.appendChild(s);
   });
-}
-
-// ── Update visitor count display ────────────────────────────────
-function updateCount(count) {
-  const el = document.getElementById('visitor-count');
-  if (!el) return;
-  if (count === 0) {
-    el.textContent = '';
-  } else if (count === 1) {
-    el.innerHTML = '<strong>1</strong> visitor';
-  } else {
-    el.innerHTML = `<strong>${count}</strong> visitors`;
-  }
 }
 
 // ── Total visitor counter (persistent via free API) ─────────────
