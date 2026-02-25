@@ -63,15 +63,5 @@ function bindLangToggle() {
 
     await loadTranslations(currentLang);
     applyTranslations();
-    syncGiscusLang();
   });
-}
-
-function syncGiscusLang() {
-  const iframe = document.querySelector('iframe.giscus-frame');
-  if (!iframe) return;
-  iframe.contentWindow.postMessage(
-    { giscus: { setConfig: { lang: currentLang === 'zh' ? 'zh-CN' : 'en' } } },
-    'https://giscus.app'
-  );
 }

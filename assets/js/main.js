@@ -21,6 +21,13 @@ async function init() {
   // Scroll reveal (runs after all content is in the DOM)
   initScrollReveal();
 
+  // Comments — only on blog post pages
+  const commentForm = document.getElementById('comment-form');
+  if (commentForm) {
+    const { initComments } = await import('./comments.js');
+    initComments();
+  }
+
   // Hero node network — only on the home page
   const heroCanvas = document.getElementById('hero-nodes-canvas');
   if (heroCanvas) {
