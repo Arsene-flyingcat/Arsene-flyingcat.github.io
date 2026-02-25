@@ -143,10 +143,15 @@
     justify-content: flex-start;
     padding-top: var(--space-2xl);
     gap: var(--space-xl);
-    background: var(--bg);
+    background: #FAFAFA !important;
     box-shadow: -4px 0 24px rgba(0,0,0,0.15);
     transform: translateX(100%);
     transition: transform var(--transition-base);
+    z-index: 999;
+  }
+
+  [data-theme="dark"] .nav-links {
+    background: #0F0D1A !important;
   }
 
   .nav-links.open {
