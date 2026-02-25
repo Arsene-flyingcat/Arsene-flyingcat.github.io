@@ -749,18 +749,20 @@
 
 /* Reply button */
 .comment-reply-btn {
-  margin-top: var(--space-xs);
+  margin-top: var(--space-sm);
   font-size: 0.8rem;
-  color: var(--text-muted);
+  font-weight: 600;
+  color: var(--primary-light);
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
+  padding: 0.2rem 0;
   transition: color var(--transition-fast);
 }
 
 .comment-reply-btn:hover {
-  color: var(--primary-light);
+  color: var(--accent-pink);
+  text-decoration: underline;
 }
 
 /* Indented replies */

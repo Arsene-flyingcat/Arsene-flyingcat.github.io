@@ -25,10 +25,7 @@ export async function initComments() {
 
   _pagePath = window.location.pathname;
 
-  // Restore saved name
-  const savedName = localStorage.getItem('comment_name');
   const nameInput = document.getElementById('comment-name');
-  if (savedName && nameInput) nameInput.value = savedName;
 
   // Load Firebase and existing comments
   try {
@@ -55,7 +52,6 @@ export async function initComments() {
     try {
       await postComment(_pagePath, name, content, null);
       contentInput.value = '';
-      localStorage.setItem('comment_name', name);
       await reloadComments();
     } catch (err) {
       console.warn('Failed to post comment:', err);
@@ -235,7 +231,7 @@ function toggleReplyForm(commentEl, parentComment) {
   if (existing) { existing.remove(); return; }
 
   const lang = getLang();
-  const savedName = localStorage.getItem('comment_name') || '';
+  const savedName = '';
 
   const form = document.createElement('form');
   form.className = 'reply-form-inline';
@@ -265,7 +261,6 @@ function toggleReplyForm(commentEl, parentComment) {
 
     try {
       await postComment(_pagePath, name, content, parentComment.id);
-      localStorage.setItem('comment_name', name);
       await reloadComments();
     } catch (err) {
       console.warn('Failed to post reply:', err);
