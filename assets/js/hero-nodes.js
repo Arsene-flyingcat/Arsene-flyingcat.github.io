@@ -7,7 +7,7 @@ export function initHeroNodes(canvas) {
   const ctx = canvas.getContext('2d');
   const CONNECT_DIST = 150;
   const MOUSE_DIST = 200;
-  const GATHER_DIST = 60;
+  const GATHER_DIST = 120;
   let width, height;
   let particles = [];
   let mouse = { x: -9999, y: -9999 };
@@ -125,7 +125,7 @@ export function initHeroNodes(canvas) {
       return;
     }
 
-    let allGathered = mouse.x > 0 && particles.length > 0;
+    let gatheredCount = 0;
 
     for (const p of particles) {
       p.x += p.vx;
@@ -147,8 +147,8 @@ export function initHeroNodes(canvas) {
       }
 
       // Check if this node is near cursor
-      if (dist > GATHER_DIST) {
-        allGathered = false;
+      if (dist <= GATHER_DIST) {
+        gatheredCount++;
       }
 
       // Ambient drift — gentle wandering even without mouse
@@ -164,7 +164,8 @@ export function initHeroNodes(canvas) {
       }
     }
 
-    if (allGathered) {
+    // Trigger when 90% of nodes are gathered near cursor
+    if (mouse.x > 0 && particles.length > 0 && gatheredCount >= particles.length * 0.9) {
       launchConfetti();
     }
   }
