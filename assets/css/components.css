@@ -747,6 +747,79 @@
   word-break: break-word;
 }
 
+/* Reply button */
+.comment-reply-btn {
+  margin-top: var(--space-xs);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color var(--transition-fast);
+}
+
+.comment-reply-btn:hover {
+  color: var(--primary-light);
+}
+
+/* Indented replies */
+.comment-replies {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-left: calc(36px + var(--space-md));
+  padding-left: var(--space-md);
+  border-left: 2px solid var(--border);
+}
+
+.comment-item--reply .comment-avatar {
+  width: 28px;
+  height: 28px;
+  font-size: 0.75rem;
+}
+
+/* Inline reply form */
+.reply-form-inline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--border);
+}
+
+.reply-form-inline input,
+.reply-form-inline textarea {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  resize: vertical;
+}
+
+.reply-form-inline input:focus,
+.reply-form-inline textarea:focus {
+  outline: none;
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 3px rgba(108, 60, 225, 0.15);
+}
+
+.reply-form-inline textarea {
+  min-height: 70px;
+}
+
+.reply-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+}
+
 /* ---- 404 page ---- */
 .error-page {
   min-height: 80vh;

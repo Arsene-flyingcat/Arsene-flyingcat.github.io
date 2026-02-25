@@ -1,5 +1,5 @@
 /**
- * comments.js — Anonymous comment system using Firebase Firestore.
+ * comments.js — Anonymous comment system with replies, using Firebase Firestore.
  * No login required — just a name and message.
  */
 
@@ -15,13 +15,15 @@ const FIREBASE_CONFIG = {
 const AVATAR_COLORS = ['#A855F7', '#06B6D4', '#F472B6', '#FB923C', '#10B981'];
 
 let db = null;
+let _pagePath = '';
+let _listEl = null;
 
 export async function initComments() {
-  const list = document.getElementById('comments-list');
+  _listEl = document.getElementById('comments-list');
   const form = document.getElementById('comment-form');
-  if (!list || !form) return;
+  if (!_listEl || !form) return;
 
-  const pagePath = window.location.pathname;
+  _pagePath = window.location.pathname;
 
   // Restore saved name
   const savedName = localStorage.getItem('comment_name');
@@ -31,13 +33,12 @@ export async function initComments() {
   // Load Firebase and existing comments
   try {
     await initFirebase();
-    const comments = await loadComments(pagePath);
-    renderComments(comments, list);
+    await reloadComments();
   } catch (e) {
     console.warn('Comments: init failed', e);
   }
 
-  // Handle form submit
+  // Handle top-level form submit
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = nameInput.value.trim();
@@ -52,12 +53,10 @@ export async function initComments() {
     btn.textContent = '...';
 
     try {
-      await postComment(pagePath, name, content);
+      await postComment(_pagePath, name, content, null);
       contentInput.value = '';
       localStorage.setItem('comment_name', name);
-      // Reload all comments so the full list is always shown
-      const comments = await loadComments(pagePath);
-      renderComments(comments, list);
+      await reloadComments();
     } catch (err) {
       console.warn('Failed to post comment:', err);
     }
@@ -71,7 +70,11 @@ export async function initComments() {
   // Re-translate when language toggles
   document.addEventListener('langchange', () => {
     updateFormLang(form);
-    const emptyEl = list.querySelector('.comments-empty');
+    // Update reply buttons and empty state
+    document.querySelectorAll('.comment-reply-btn').forEach(b => {
+      b.textContent = getLang() === 'zh' ? '回复' : 'Reply';
+    });
+    const emptyEl = _listEl.querySelector('.comments-empty');
     if (emptyEl) {
       emptyEl.textContent = getLang() === 'zh' ? '还没有评论，来做第一个吧！' : 'No comments yet. Be the first!';
     }
@@ -123,7 +126,7 @@ async function loadComments(pagePath) {
   }
 }
 
-async function postComment(pagePath, authorName, content) {
+async function postComment(pagePath, authorName, content, parentId) {
   if (!db) return null;
   const data = {
     page_path: pagePath,
@@ -131,9 +134,13 @@ async function postComment(pagePath, authorName, content) {
     content: content,
     created_at: firebase.firestore.FieldValue.serverTimestamp()
   };
-  const ref = await db.collection('comments').add(data);
-  // Return with a client-side timestamp for immediate rendering
-  return { id: ref.id, author_name: authorName, content: content, created_at: new Date().toISOString() };
+  if (parentId) data.parent_id = parentId;
+  await db.collection('comments').add(data);
+}
+
+async function reloadComments() {
+  const comments = await loadComments(_pagePath);
+  renderComments(comments, _listEl);
 }
 
 function loadScript(src) {
@@ -156,15 +163,35 @@ function renderComments(comments, container) {
     container.innerHTML = `<p class="comments-empty">${msg}</p>`;
     return;
   }
-  comments.forEach(c => appendComment(c, container));
+
+  // Separate top-level and replies
+  const topLevel = comments.filter(c => !c.parent_id);
+  const replies = comments.filter(c => c.parent_id);
+  const replyMap = {};
+  replies.forEach(r => {
+    if (!replyMap[r.parent_id]) replyMap[r.parent_id] = [];
+    replyMap[r.parent_id].push(r);
+  });
+
+  topLevel.forEach(c => {
+    const el = buildCommentEl(c);
+    container.appendChild(el);
+
+    // Render replies indented
+    if (replyMap[c.id]) {
+      const repliesDiv = document.createElement('div');
+      repliesDiv.className = 'comment-replies';
+      replyMap[c.id].forEach(r => {
+        repliesDiv.appendChild(buildCommentEl(r, true));
+      });
+      container.appendChild(repliesDiv);
+    }
+  });
 }
 
-function appendComment(comment, container) {
-  const empty = container.querySelector('.comments-empty');
-  if (empty) empty.remove();
-
+function buildCommentEl(comment, isReply) {
   const el = document.createElement('div');
-  el.className = 'comment-item';
+  el.className = 'comment-item' + (isReply ? ' comment-item--reply' : '');
 
   const initial = (comment.author_name || '?')[0].toUpperCase();
   const color = AVATAR_COLORS[comment.author_name.length % AVATAR_COLORS.length];
@@ -177,6 +204,8 @@ function appendComment(comment, container) {
     hour: '2-digit', minute: '2-digit'
   });
 
+  const replyLabel = getLang() === 'zh' ? '回复' : 'Reply';
+
   el.innerHTML = `
     <div class="comment-avatar" style="background:${color}">${initial}</div>
     <div class="comment-body">
@@ -185,9 +214,67 @@ function appendComment(comment, container) {
         <span class="comment-time">${timeStr}</span>
       </div>
       <div class="comment-text">${escapeHtml(comment.content)}</div>
+      ${!isReply ? `<button class="comment-reply-btn" type="button">${replyLabel}</button>` : ''}
     </div>
   `;
-  container.appendChild(el);
+
+  // Bind reply button
+  if (!isReply) {
+    const replyBtn = el.querySelector('.comment-reply-btn');
+    replyBtn.addEventListener('click', () => toggleReplyForm(el, comment));
+  }
+
+  return el;
+}
+
+function toggleReplyForm(commentEl, parentComment) {
+  // Close any other open reply forms
+  document.querySelectorAll('.reply-form-inline').forEach(f => f.remove());
+
+  const existing = commentEl.querySelector('.reply-form-inline');
+  if (existing) { existing.remove(); return; }
+
+  const lang = getLang();
+  const savedName = localStorage.getItem('comment_name') || '';
+
+  const form = document.createElement('form');
+  form.className = 'reply-form-inline';
+  form.innerHTML = `
+    <input type="text" class="reply-name" placeholder="${lang === 'zh' ? '你的名字' : 'Your name'}" value="${escapeHtml(savedName)}" required>
+    <textarea class="reply-content" placeholder="${lang === 'zh' ? '写下你的回复...' : 'Write a reply...'}" rows="3" required></textarea>
+    <div class="reply-form-actions">
+      <button type="button" class="btn btn-ghost btn-sm reply-cancel">${lang === 'zh' ? '取消' : 'Cancel'}</button>
+      <button type="submit" class="btn btn-primary btn-sm">${lang === 'zh' ? '回复' : 'Reply'}</button>
+    </div>
+  `;
+
+  // Insert after the comment body
+  commentEl.querySelector('.comment-body').appendChild(form);
+
+  form.querySelector('.reply-cancel').addEventListener('click', () => form.remove());
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = form.querySelector('.reply-name').value.trim();
+    const content = form.querySelector('.reply-content').value.trim();
+    if (!name || !content) return;
+
+    const btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = '...';
+
+    try {
+      await postComment(_pagePath, name, content, parentComment.id);
+      localStorage.setItem('comment_name', name);
+      await reloadComments();
+    } catch (err) {
+      console.warn('Failed to post reply:', err);
+      btn.disabled = false;
+      btn.textContent = lang === 'zh' ? '回复' : 'Reply';
+    }
+  });
+
+  form.querySelector('.reply-content').focus();
 }
 
 function escapeHtml(str) {
