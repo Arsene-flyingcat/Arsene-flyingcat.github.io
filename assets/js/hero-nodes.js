@@ -17,7 +17,8 @@ export function initHeroNodes(canvas) {
   let confettiStart = 0;
   const CONFETTI_DURATION = 5000;
   let secondaryBursts = [];
-  let burstsSpawned = false;
+  const BURST_TIMES = [800, 1600, 2500, 3400];
+  let nextBurstIndex = 0;
 
   function isDark() {
     return document.documentElement.getAttribute('data-theme') === 'dark';
@@ -86,7 +87,7 @@ export function initHeroNodes(canvas) {
 
   function launchConfetti() {
     confettiActive = true;
-    burstsSpawned = false;
+    nextBurstIndex = 0;
     confettiStart = performance.now();
     confetti = [];
     secondaryBursts = [];
@@ -119,15 +120,14 @@ export function initHeroNodes(canvas) {
       c.rotation += c.rotSpeed;
     }
 
-    // Secondary bursts at ~1.5s from random confetti pieces
-    if (!burstsSpawned && elapsed > 1500) {
-      burstsSpawned = true;
-      const candidates = confetti.filter(c => c.x > 0 && c.x < width && c.y > 0 && c.y < height);
-      const count = Math.min(8, candidates.length);
-      for (let i = 0; i < count; i++) {
-        const pick = candidates[Math.floor(Math.random() * candidates.length)];
-        secondaryBursts.push(...spawnBurst(pick.x, pick.y, 20));
+    // Secondary bursts at multiple times across the canvas
+    while (nextBurstIndex < BURST_TIMES.length && elapsed > BURST_TIMES[nextBurstIndex]) {
+      for (let i = 0; i < 5; i++) {
+        const bx = Math.random() * width * 0.8 + width * 0.1;
+        const by = Math.random() * height * 0.6 + height * 0.1;
+        secondaryBursts.push(...spawnBurst(bx, by, 25));
       }
+      nextBurstIndex++;
     }
 
     // Update secondary burst pieces
