@@ -36,6 +36,28 @@ const CONTINENTS = [
   [[116,16,2,2],[117,18,2,3],[116,21,2,2]],
   // New Zealand
   [[126,54,2,2],[126,56,2,3]],
+  // Scandinavia (Norway/Sweden/Finland)
+  [[78,6,2,2],[79,8,3,3]],
+  // Iberian Peninsula (Spain/Portugal)
+  [[71,24,4,3]],
+  // Italian Peninsula
+  [[78,24,2,4]],
+  // Arabian Peninsula
+  [[82,26,3,2],[82,28,4,3],[83,31,3,2]],
+  // Indian Subcontinent
+  [[89,30,4,2],[89,32,4,2],[90,34,3,2],[91,36,2,2]],
+  // Korean Peninsula
+  [[110,16,2,6]],
+  // Central America
+  [[38,32,3,2],[39,34,3,2],[40,36,2,2]],
+  // Iceland
+  [[63,7,3,2]],
+  // Madagascar
+  [[82,48,2,4]],
+  // Taiwan
+  [[112,24,2,2]],
+  // Sri Lanka
+  [[93,38,2,2]],
 ];
 
 // ── Color palette ─────────────────────────────────────────────────
@@ -74,6 +96,9 @@ export function initVisitorMap(canvas) {
   window.addEventListener('resize', () => resize(canvas));
 
   drawMap(ctx, canvas);
+
+  // Fetch total visitor count
+  fetchTotalVisitors().then(total => updateTotalCount(total));
 
   // Fetch current visitor location
   fetchVisitorLocation().then(async (loc) => {
@@ -334,4 +359,31 @@ function updateCount(count) {
   } else {
     el.innerHTML = `<strong>${count}</strong> visitors`;
   }
+}
+
+// ── Total visitor counter (persistent via free API) ─────────────
+async function fetchTotalVisitors() {
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
+    const res = await fetch('https://api.counterapi.dev/v1/arsene-flyingcat-github-io/visits/up', {
+      signal: controller.signal
+    });
+    clearTimeout(timeout);
+    if (res.ok) {
+      const data = await res.json();
+      const count = data.count || 0;
+      localStorage.setItem('totalVisitorCount', String(count));
+      return count;
+    }
+  } catch (e) {
+    console.warn('Visitor counter API failed:', e);
+  }
+  return parseInt(localStorage.getItem('totalVisitorCount') || '0', 10);
+}
+
+function updateTotalCount(count) {
+  const el = document.getElementById('total-visitors');
+  if (!el || count <= 0) return;
+  el.innerHTML = `<strong>${count.toLocaleString()}</strong> total visits`;
 }
