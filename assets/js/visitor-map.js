@@ -102,7 +102,10 @@ export function initVisitorMap(canvas) {
   drawMap(ctx, canvas);
 
   // Fetch total visitor count
-  fetchTotalVisitors().then(total => updateTotalCount(total));
+  fetchTotalVisitors().then(total => {
+    updateTotalCount(total);
+    document.addEventListener('langchange', () => updateTotalCount(total));
+  });
 
   // Fetch current visitor location
   fetchVisitorLocation().then(async (loc) => {
