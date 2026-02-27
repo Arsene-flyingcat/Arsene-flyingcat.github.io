@@ -385,8 +385,8 @@ function updateTotalCount(count) {
   if (!el || count <= 0) return;
   const lang = document.documentElement.getAttribute('data-lang') || 'en';
   if (lang === 'zh') {
-    el.innerHTML = `<strong>${count.toLocaleString()}</strong> \u6b21\u8bbf\u95ee`;
+    el.innerHTML = `已有 <strong>${count.toLocaleString()}</strong> 位朋友到访过，感谢每一次相遇`;
   } else {
-    el.innerHTML = `<strong>${count.toLocaleString()}</strong> total visits`;
+    el.innerHTML = `<strong>${count.toLocaleString()}</strong> friends have visited — thanks for being one of them!`;
   }
 }
