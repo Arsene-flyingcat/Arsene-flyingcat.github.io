@@ -1,6 +1,7 @@
 /**
  * Cloudflare Worker — Proxy between the blog and Firestore REST API.
  * Bypasses China's GFW block on googleapis.com / gstatic.com.
+ * Also handles background visitor IP tracking via KV.
  */
 
 export default {
@@ -26,6 +27,13 @@ export default {
       }
       if (url.pathname === '/api/comments' && request.method === 'POST') {
         return await handlePost(request, env, corsHeaders);
+      }
+      // ── Visitor tracking ───────────────────────────────────────
+      if (url.pathname === '/api/track' && request.method === 'POST') {
+        return await handleTrack(request, env, corsHeaders);
+      }
+      if (url.pathname === '/api/visits' && request.method === 'GET') {
+        return await handleVisits(url, env, corsHeaders);
       }
       return json({ error: 'Not found' }, 404, corsHeaders);
     } catch (err) {
@@ -136,6 +144,69 @@ async function handlePost(request, env, corsHeaders) {
 
   const doc = await resp.json();
   return json(docToComment(doc), 201, corsHeaders);
+}
+
+// ── POST /api/track — record a visit silently ────────────────────
+
+async function handleTrack(request, env, corsHeaders) {
+  if (!env.VISITS) {
+    return json({ ok: false, reason: 'KV not bound' }, 200, corsHeaders);
+  }
+
+  const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+  const country = request.headers.get('CF-IPCountry') || '';
+  const ua = request.headers.get('User-Agent') || '';
+  const cf = request.cf || {};
+  const city = cf.city || '';
+  const region = cf.region || '';
+
+  let page = '/';
+  try {
+    const text = await request.text();
+    const body = JSON.parse(text);
+    page = body.page || '/';
+  } catch { /* keep defaults */ }
+
+  const now = new Date();
+  const date = now.toISOString().slice(0, 10);
+  const id = crypto.randomUUID();
+
+  const visit = { ip, country, city, region, page, ua, ts: now.toISOString() };
+
+  await env.VISITS.put(`v:${date}:${id}`, JSON.stringify(visit), {
+    expirationTtl: 90 * 86400, // auto-delete after 90 days
+  });
+
+  return json({ ok: true }, 200, corsHeaders);
+}
+
+// ── GET /api/visits?token=...&date=...&days=... — query visits ──
+
+async function handleVisits(url, env, corsHeaders) {
+  const token = url.searchParams.get('token');
+  if (!token || token !== env.ADMIN_TOKEN) {
+    return json({ error: 'Unauthorized' }, 401, corsHeaders);
+  }
+  if (!env.VISITS) {
+    return json({ error: 'KV not bound' }, 500, corsHeaders);
+  }
+
+  const days = Math.min(parseInt(url.searchParams.get('days')) || 1, 30);
+  const result = {};
+
+  for (let d = 0; d < days; d++) {
+    const date = new Date(Date.now() - d * 86400000).toISOString().slice(0, 10);
+    const prefix = `v:${date}:`;
+    const list = await env.VISITS.list({ prefix, limit: 1000 });
+    const visits = [];
+    for (const key of list.keys) {
+      const val = await env.VISITS.get(key.name, 'json');
+      if (val) visits.push(val);
+    }
+    result[date] = { count: visits.length, visits };
+  }
+
+  return json(result, 200, corsHeaders);
 }
 
 // ── Helpers ──────────────────────────────────────────────────────

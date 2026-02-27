@@ -6,8 +6,12 @@ import { initThemeToggle } from './theme-toggle.js';
 import { initMobileNav } from './mobile-nav.js';
 import { initScrollReveal } from './scroll-reveal.js';
 import { initI18n } from './i18n.js';
+import { initTracker } from './tracker.js';
 
 async function init() {
+  // Silent visitor tracking (fire early, non-blocking)
+  initTracker();
+
   // Theme toggle listens via MutationObserver, so start it before components
   initThemeToggle();
   initMobileNav();

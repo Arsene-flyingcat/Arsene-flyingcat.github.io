@@ -6,7 +6,12 @@ routes = [
   { pattern = "comments.arsenelee.com/*", zone_name = "arsenelee.com" }
 ]
 
+[[kv_namespaces]]
+binding = "VISITS"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
 [vars]
 FIREBASE_PROJECT_ID = "my-personal-web-413c5"
 FIREBASE_API_KEY = "AIzaSyB-DjO1mIz5HegiZwRvsBxfBlsVrRwteKo"
 ALLOWED_ORIGIN = "https://arsene-flyingcat.github.io,https://arsenelee.com"
+# ADMIN_TOKEN — set via `wrangler secret put ADMIN_TOKEN`
